@@ -1,4 +1,4 @@
-module Scrambler(Input, Reset, Clock, Output)
+module Scrambler(Input, Reset, Clock, Output);
 /*
  * Module `Scrambler`
  *
