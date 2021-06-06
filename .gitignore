@@ -20,3 +20,6 @@
 # *.ps
 # *.eps
 # *.pdf
+
+## Matlab
+*.asv
