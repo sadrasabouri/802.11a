@@ -10,6 +10,12 @@ This directory contains different files:
 ## [Scrambler.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Scrambler/Scrambler.v)
 Scrambler Verilog module which will be used as a first layer in transmitter.
 
+## [Scrambler_tb.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Scrambler/Scrambler_tb.v)
+Scrambler Verilog test bench which will be used as a unit test.
+
+## [Scrambler_tb.txt](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Scrambler/Scrambler_tb.txt)
+Scrambler Verilog test bench result.
+
 ## [Scrambler.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Scrambler/Scrambler.m)
 Scrambler matlab function which will be used as a software simulation for HDL module.
 
