@@ -12,14 +12,26 @@ Bellow structure will be implemented for this project which is by the way a opti
 This part contains transmitter part of the protocol which simply breaks into 3 part:
 
 1. Scrambler
-2. Convolutional-Encoder
 
 ```
-               +-----------+        +---------+
-               |           |        |         |
-Input Data --> | Scrambler +------> |  Conv.  |
-               |           |        | Encoder |
-               |           |        |         |
-               +-----------+        +---------+
+               +-----------+
+               |           |
+Input Data --> | Scrambler +------> to Antenna
+               |           |
+               |           |
+               +-----------+
 ```
+
 ### [Receiver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver)
+This part contains receiver part of the protocol which simply breaks into 3 part:
+
+1. De-Scrambler
+
+```
+                +--------------+ 
+                |              |
+Output Data --> | De-Scrambler | <------ from Antenna
+                |              |
+                |              |
+                +--------------+
+```
