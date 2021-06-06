@@ -1,0 +1,151 @@
+%declear package name
+\ProvidesPackage{LectureTemplate}
+
+\usepackage{url,amsmath,setspace,amssymb,tikz,graphicx}
+
+%page settings
+\setlength{\oddsidemargin}{.25in}
+\setlength{\evensidemargin}{.25in}
+\setlength{\textwidth}{6.25in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\textheight}{8.5in}
+\setlength{\parindent}{0in}
+\bibliographystyle{plain}
+
+
+
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{tikz}
+\usepackage{amsmath}
+\usepackage{algorithm}
+% Need it for floating environment
+\usepackage[noend]{algpseudocode} 
+% Hide endif .etc
+\usepackage{caption}
+% Need it for \caption*
+\usepackage{xspace}
+% Fix macro spacing bug
+\usepackage{xepersian}
+
+
+\algrenewcommand{\algorithmicrequire}{\textbf{Input:}}
+\algrenewcommand{\algorithmicensure}{\textbf{Output:}}
+\algrenewcommand{\algorithmicforall}{\textbf{for each}}
+% \algrenewcommand instead of \renewcommand according to manual
+\newcommand{\To}{\textbf{ to }}
+\newcommand{\downto}{\textbf{ downto }}
+
+
+
+
+
+
+
+%define commands and enviroments
+
+\newcommand{\heading}[6]
+{
+   %set paging
+   \renewcommand{\thepage}{#1-\arabic{page}}
+
+
+\begin{tabular}{rp{3.05cm}cp{3.05cm}l}
+\includegraphics[scale=0.15]{sharif-logo.png}&&
+\textbf{دانشکده‌ی علوم ریاضی}
+&&\includegraphics[scale=0.15]{sharif-logo.png}
+\end{tabular}
+
+   \noindent
+   \begin{center}
+   \framebox[\textwidth]
+   {
+     \begin{minipage}{0.9\textwidth} \onehalfspacing
+       {\bf  #6} \hfill #2
+
+       {\centering \Large #5
+       
+       }\medskip
+
+       {\it #3 \hfill #4}
+     \end{minipage}
+   }
+   \end{center}
+}
+
+\newcommand{\handout}[5]{\heading{#2}{#3}{مدرّس: دکتر شهرام خزائی}
+{
+نگارنده: #5
+}
+{
+تمرین سری #2 #4
+}{#1}}
+
+\newsavebox\mybox
+
+\newcommand{\mA}{{\mathcal A}}
+\newcommand{\mB}{{\mathcal B}}
+\newcommand{\mC}{{\mathcal C}}
+\newcommand{\mD}{{\mathcal D}}
+\newcommand{\mE}{{\mathcal E}}
+\newcommand{\mF}{{\mathcal F}}
+\newcommand{\mG}{{\mathcal G}}
+\newcommand{\mH}{{\mathcal H}}
+\newcommand{\mI}{{\mathcal I}}
+\newcommand{\mJ}{{\mathcal J}}
+\newcommand{\mK}{{\mathcal K}}
+\newcommand{\mL}{{\mathcal L}}
+\newcommand{\mM}{{\mathcal M}}
+\newcommand{\mN}{{\mathcal N}}
+\newcommand{\mO}{{\mathcal O}}
+\newcommand{\mP}{{\mathcal P}}
+\newcommand{\mQ}{{\mathcal Q}}
+\newcommand{\mR}{{\mathcal R}}
+\newcommand{\mS}{{\mathcal S}}
+\newcommand{\mT}{{\mathcal T}}
+\newcommand{\mU}{{\mathcal U}}
+\newcommand{\mV}{{\mathcal V}}
+\newcommand{\mW}{{\mathcal W}}
+\newcommand{\mX}{{\mathcal X}}
+\newcommand{\mY}{{\mathcal Y}}
+\newcommand{\mZ}{{\mathcal Z}}
+
+\newcommand{\hs}{\heartsuit}
+\newcommand{\cs}{\clubsuit}
+\renewcommand{\sp}{\spadesuit}
+\newcommand{\ds}{\diamondsuit}
+\newcommand{\noi}{\noindent}
+\newcommand{\exi}{\exists}
+\newcommand{\fa}{\forall}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\la}{\leftarrow}
+
+
+% expectation
+\newcommand{\Expec}{\mathrm{E}}
+\newcommand{\Indic}{\mathrm{I}}
+
+
+
+\newcommand{\qed}{\mbox{}\hspace*{\fill}\nolinebreak\mbox{$\rule{0.6em}{0.6em}$}} %%to end your proof write $\qed$.
+
+
+
+\newenvironment{proof}{\par\textbf{برهان.}}{\mbox{}\hspace*{\fill}\nolinebreak\mbox{$\rule{0.6em}{0.6em}$}}
+\newenvironment{solution}{\par\textbf{جواب.}}
+
+
+\newtheorem{lemma}{لم}
+\newtheorem{theorem}[lemma]{قضیه}
+\newtheorem{definition}{تعریف}
+\newtheorem{proposition}{گزاره}
+\newtheorem{example}{مثال}
+\newtheorem{remark}{نکته}
+\newtheorem{question}{سؤال}
+\newtheorem{convention}{قرارداد}
+\newtheorem{corollary}{نتیجه}
+
+

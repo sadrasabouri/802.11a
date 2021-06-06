@@ -1,0 +1,126 @@
+%declear package name
+\ProvidesPackage{LectureTemplate}
+
+\usepackage{url,amsmath,setspace,amssymb,tikz,graphicx}
+
+%page settings
+\bibliographystyle{plain}
+
+
+
+\usepackage{tikz}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=20mm,
+ top=20mm,
+ }
+\newcolumntype{x}[1]{>{\centering\arraybackslash\hspace{0pt}}p{#1}}
+
+\usetikzlibrary{arrows}
+
+%این بسته مخصوص طراحی دیاگرام و گراف است و کار با آن بسیار ساده تر از tikz می باشد
+
+
+%define commands and enviroments
+
+\newcommand{\heading}[7]
+{
+   %set paging
+   \renewcommand{\thepage}{\arabic{page}}
+\begin{table}[ht]
+\centering
+\begin{tabular}[c]{m{4in}  p{0.18in} x{2in}}
+\huge #1 && \multirow{3}{*}[0.6em]{\includegraphics[scale=0.13]{sharif-logo.png}} \\ [1em]
+\large#4 &&\\ [0.7em]
+\large#3&& #2 \\ [0.5em]
+\hline
+&&\\[-0.7em]
+\multicolumn{3}{c}{\large \textbf{#7}}\\[0.5em]
+\hline
+&&\\[-0.7em]
+#5 &  & #6 \\[0.5em]
+\hline
+\end{tabular}
+   \noindent
+\end{table}
+}
+
+
+\newcommand{\handout}[7]{\heading
+{#1}{دانشکده مهندسی برق}
+{مدرس: #2}
+{#3}{نام و نام‌خانوادگی: #5}{شماره دانشجویی: #6}{#7}
+}
+
+
+
+\newsavebox\mybox
+
+\newcommand{\mA}{{\mathcal A}}
+\newcommand{\mB}{{\mathcal B}}
+\newcommand{\mC}{{\mathcal C}}
+\newcommand{\mD}{{\mathcal D}}
+\newcommand{\mE}{{\mathcal E}}
+\newcommand{\mF}{{\mathcal F}}
+\newcommand{\mG}{{\mathcal G}}
+\newcommand{\mH}{{\mathcal H}}
+\newcommand{\mI}{{\mathcal I}}
+\newcommand{\mJ}{{\mathcal J}}
+\newcommand{\mK}{{\mathcal K}}
+\newcommand{\mL}{{\mathcal L}}
+\newcommand{\mM}{{\mathcal M}}
+\newcommand{\mN}{{\mathcal N}}
+\newcommand{\mO}{{\mathcal O}}
+\newcommand{\mP}{{\mathcal P}}
+\newcommand{\mQ}{{\mathcal Q}}
+\newcommand{\mR}{{\mathcal R}}
+\newcommand{\mS}{{\mathcal S}}
+\newcommand{\mT}{{\mathcal T}}
+\newcommand{\mU}{{\mathcal U}}
+\newcommand{\mV}{{\mathcal V}}
+\newcommand{\mW}{{\mathcal W}}
+\newcommand{\mX}{{\mathcal X}}
+\newcommand{\mY}{{\mathcal Y}}
+\newcommand{\mZ}{{\mathcal Z}}
+
+\newcommand{\hs}{\heartsuit}
+\newcommand{\cs}{\clubsuit}
+\renewcommand{\sp}{\spadesuit}
+\newcommand{\ds}{\diamondsuit}
+\newcommand{\noi}{\noindent}
+\newcommand{\exi}{\exists}
+\newcommand{\fa}{\forall}
+\newcommand{\Ra}{\Rightarrow}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\La}{\Leftarrow}
+\newcommand{\la}{\leftarrow}
+%----------------------------------------
+%cryptsystem
+
+\newcommand{\Enc}{\mathsf{Enc}}
+\newcommand{\Dec}{\mathsf{Dec}}
+\newcommand{\Gen}{\mathsf{Gen}}
+
+
+%----------------------------------------
+
+\newcommand{\qed}{\mbox{}\hspace*{\fill}\nolinebreak\mbox{$\rule{0.6em}{0.6em}$}} %%to end your proof write $\qed$.
+
+
+
+\newenvironment{proof}{\par\textbf{برهان.}}{\mbox{}\hspace*{\fill}\nolinebreak\mbox{$\rule{0.6em}{0.6em}$}}
+\newtheorem{lemma}{لم}
+\newtheorem{theorem}[lemma]{قضیه}
+\newtheorem{definition}{تعریف}
+\newtheorem{proposition}{گزاره}
+\newtheorem{example}{مثال}
+\newtheorem{remark}{نکته}
+\newtheorem{question}{سؤال}
+\newtheorem{convention}{قرارداد}
+\newtheorem{corollary}{نتیجه}
+
