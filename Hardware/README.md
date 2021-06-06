@@ -1,4 +1,4 @@
-# Hardware Implementation of 802.11a protocol
+# Hardware Implementation of 802.11a Protocol
 In this Hardware Implementation of IEEE 802.11a Wifi Standard we feature Verilog for our HDL language and Matlab for our high-level testing language.
 
 Hardware simulations will be also done by Modelsim.
@@ -14,7 +14,7 @@ This part contains transmitter part of the protocol which simply breaks into 3 p
 1. Scrambler
 2. Convolutional-Encoder
 
-```ditaa {cmd=true args=["-E"]}
+```
                +-----------+        +---------+
                |           |        |         |
 Input Data --> | Scrambler +------> |  Conv.  |
