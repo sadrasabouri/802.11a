@@ -33,7 +33,7 @@ This part contains receiver part of the protocol which simply breaks into 3 part
 ```
                 +--------------+ 
                 |              |
-Output Data --> | DeScrambler | <------ from Antenna
+Output Data --> | DeScrambler  | <------ from Antenna
                 |              |
                 |              |
                 +--------------+
