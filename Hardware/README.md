@@ -12,6 +12,7 @@ Wifi frame which is going to be used here is as fallows:
 
 
 ### [Transmitter](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter)
+[Transmitter](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Transmitter.v) module has the rule of converting `input` data after `start` to wifi frame and send it to antenna.
 This part contains transmitter part of the protocol which simply breaks into 3 part:
 
 1. [Scrambler](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Scrambler)
