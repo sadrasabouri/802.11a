@@ -2,13 +2,13 @@ function Output = DeScrambler(Input)
 % /*
 %  * `DeScrambler` Matlab function
 %  *
-%  * 802.11a IEEE Wifi PLCP DATA Scrambler (https://pdos.csail.mit.edu/archive/decouto/papers/802.11a.pdf - Page 16)
+%  * 802.11a IEEE Wifi PLCP DATA DeScrambler (https://pdos.csail.mit.edu/archive/decouto/papers/802.11a.pdf - Page 16)
 %  * S(x) = x ^ 7 + x ^ 4 + 1
 %  * With initial value of (x_7, x_6, x_5, x_4, x_3, x_2, x_1) = (1, 1, 1, 1, 1, 1, 1)
 %  * 
 %  * parameters:
 %  * Input    [n]: Input data array 
-%  * Output   [n]: Output scrambled data array
+%  * Output   [n]: Output descrambled data array
 %  *
 %  * [TEST_INPUT]:  [0, 0, 0, 0, 1, 1, 1, 0,
 %  *                 1, 1, 1, 1, 0, 0, 1, 0,
