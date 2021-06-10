@@ -6,7 +6,17 @@ Hardware simulations will be also done by Modelsim.
 
 ## Main Structure
 Bellow structure will be implemented for this project which is by the way a optimal subset of 802.11a standard.
+Wifi frame which is going to be used here is as fallows:
 
+<img src="https://github.com/sadrasabouri/802.11a/blob/master/OtherFiles/WifiFrames.PNG">
+
+
+```
+
+    +-----------+
+    | Scrambler |
+    +-----------+
+```
 
 ### [Transmitter](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter)
 This part contains transmitter part of the protocol which simply breaks into 3 part:
@@ -25,12 +35,12 @@ Input Data --> | Scrambler +------> to Antenna
 ### [Receiver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver)
 This part contains receiver part of the protocol which simply breaks into 3 part:
 
-1. De-Scrambler
+1. DeScrambler
 
 ```
                 +--------------+ 
                 |              |
-Output Data --> | De-Scrambler | <------ from Antenna
+Output Data --> | DeScrambler | <------ from Antenna
                 |              |
                 |              |
                 +--------------+
