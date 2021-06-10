@@ -55,26 +55,34 @@ module DeScrambler_tb;
 		$display("[START]");
 		Clock = 0;
 		Reset = 0;
-        Input = 0;
+        Input = SEQ_IN[1];
         #10
 
         Reset = 1;
         #1;
         Reset = 0;
 
-        for (i = 1; i <= 127; i = i + 1)
+        for (i = 2; i <= 127; i = i + 1)
         begin
             Input = SEQ_IN[i];
             if (Output == 0)
             begin
-                $display("[OK] (", i, "/", 127, ")");
+                $display("[OK] (", i-1, "/", 127, ")");
                 N_PASS = N_PASS + 1;  
             end
             else
-                $display("[FAILED] (", i, "/", 127, ") Expected:%b  |  Got:%b", 0, Output);
+                $display("[FAILED] (", i-1, "/", 127, ") Expected:%b  |  Got:%b", 1'b0, Output);
             #1;
         end
 
+        if (Output == 0)
+        begin
+            $display("[OK] (", i-1, "/", 127, ")");
+            N_PASS = N_PASS + 1;  
+        end
+        else
+            $display("[FAILED] (", i-1, "/", 127, ") Expected:%b  |  Got:%b", 1'b0, Output);
+        
         if (N_PASS == 127)
             $display("ALL TEST PASSED. :)");
         else
