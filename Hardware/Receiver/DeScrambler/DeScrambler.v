@@ -10,7 +10,7 @@ module DeScrambler(Input, Reset, Clock, Output);
  * Input    [1]: Input data stream
  * Reset    [1]: Active high asynchronous reset
  * Clock    [1]: Input clock
- * Output   [1]: Output scrambled data stream
+ * Output   [1]: Output descrambled data stream
  *
  *************************************************
  * @author : sadrasabouri(sabouri.sadra@gmail.com)
