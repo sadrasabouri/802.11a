@@ -1,266 +1,592 @@
 # [START]
-#                    1ns | Reset=0 Input=0 --- > Output:x
-#                    2ns | Reset=0 Input=0 --- > Output:x
-#                    3ns | Reset=0 Input=0 --- > Output:x
-#                    4ns | Reset=0 Input=0 --- > Output:x
-#                    5ns | Reset=0 Input=0 --- > Output:x
-#                    6ns | Reset=0 Input=0 --- > Output:x
-#                    7ns | Reset=0 Input=0 --- > Output:x
-#                    8ns | Reset=0 Input=0 --- > Output:x
-#                    9ns | Reset=0 Input=0 --- > Output:x
-#                   10ns | Reset=1 Input=0 --- > Output:x
-# [OK] (          1/        127)
-#                   11ns | Reset=0 Input=0 --- > Output:0
-# [OK] (          2/        127)
-#                   12ns | Reset=0 Input=0 --- > Output:0
-# [OK] (          3/        127)
-#                   13ns | Reset=0 Input=0 --- > Output:0
-# [OK] (          4/        127)
-#                   14ns | Reset=0 Input=0 --- > Output:0
-# [OK] (          5/        127)
-#                   15ns | Reset=0 Input=0 --- > Output:1
-# [OK] (          6/        127)
-#                   16ns | Reset=0 Input=0 --- > Output:1
-# [OK] (          7/        127)
-#                   17ns | Reset=0 Input=0 --- > Output:1
-# [OK] (          8/        127)
-#                   18ns | Reset=0 Input=0 --- > Output:0
-# [OK] (          9/        127)
-#                   19ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         10/        127)
-#                   20ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         11/        127)
-#                   21ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         12/        127)
-#                   22ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         13/        127)
-#                   23ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         14/        127)
-#                   24ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         15/        127)
-#                   25ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         16/        127)
-#                   26ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         17/        127)
-#                   27ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         18/        127)
-#                   28ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         19/        127)
-#                   29ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         20/        127)
-#                   30ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         21/        127)
-#                   31ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         22/        127)
-#                   32ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         23/        127)
-#                   33ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         24/        127)
-#                   34ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         25/        127)
-#                   35ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         26/        127)
-#                   36ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         27/        127)
-#                   37ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         28/        127)
-#                   38ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         29/        127)
-#                   39ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         30/        127)
-#                   40ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         31/        127)
-#                   41ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         32/        127)
-#                   42ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         33/        127)
-#                   43ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         34/        127)
-#                   44ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         35/        127)
-#                   45ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         36/        127)
-#                   46ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         37/        127)
-#                   47ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         38/        127)
-#                   48ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         39/        127)
-#                   49ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         40/        127)
-#                   50ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         41/        127)
-#                   51ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         42/        127)
-#                   52ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         43/        127)
-#                   53ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         44/        127)
-#                   54ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         45/        127)
-#                   55ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         46/        127)
-#                   56ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         47/        127)
-#                   57ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         48/        127)
-#                   58ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         49/        127)
-#                   59ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         50/        127)
-#                   60ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         51/        127)
-#                   61ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         52/        127)
-#                   62ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         53/        127)
-#                   63ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         54/        127)
-#                   64ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         55/        127)
-#                   65ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         56/        127)
-#                   66ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         57/        127)
-#                   67ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         58/        127)
-#                   68ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         59/        127)
-#                   69ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         60/        127)
-#                   70ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         61/        127)
-#                   71ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         62/        127)
-#                   72ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         63/        127)
-#                   73ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         64/        127)
-#                   74ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         65/        127)
-#                   75ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         66/        127)
-#                   76ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         67/        127)
-#                   77ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         68/        127)
-#                   78ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         69/        127)
-#                   79ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         70/        127)
-#                   80ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         71/        127)
-#                   81ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         72/        127)
-#                   82ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         73/        127)
-#                   83ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         74/        127)
-#                   84ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         75/        127)
-#                   85ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         76/        127)
-#                   86ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         77/        127)
-#                   87ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         78/        127)
-#                   88ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         79/        127)
-#                   89ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         80/        127)
-#                   90ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         81/        127)
-#                   91ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         82/        127)
-#                   92ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         83/        127)
-#                   93ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         84/        127)
-#                   94ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         85/        127)
-#                   95ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         86/        127)
-#                   96ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         87/        127)
-#                   97ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         88/        127)
-#                   98ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         89/        127)
-#                   99ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         90/        127)
-#                  100ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         91/        127)
-#                  101ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         92/        127)
-#                  102ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         93/        127)
-#                  103ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         94/        127)
-#                  104ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         95/        127)
-#                  105ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         96/        127)
-#                  106ns | Reset=0 Input=0 --- > Output:0
-# [OK] (         97/        127)
-#                  107ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         98/        127)
-#                  108ns | Reset=0 Input=0 --- > Output:1
-# [OK] (         99/        127)
-#                  109ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        100/        127)
-#                  110ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        101/        127)
-#                  111ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        102/        127)
-#                  112ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        103/        127)
-#                  113ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        104/        127)
-#                  114ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        105/        127)
-#                  115ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        106/        127)
-#                  116ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        107/        127)
-#                  117ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        108/        127)
-#                  118ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        109/        127)
-#                  119ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        110/        127)
-#                  120ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        111/        127)
-#                  121ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        112/        127)
-#                  122ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        113/        127)
-#                  123ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        114/        127)
-#                  124ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        115/        127)
-#                  125ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        116/        127)
-#                  126ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        117/        127)
-#                  127ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        118/        127)
-#                  128ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        119/        127)
-#                  129ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        120/        127)
-#                  130ns | Reset=0 Input=0 --- > Output:0
-# [OK] (        121/        127)
-#                  131ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        122/        127)
-#                  132ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        123/        127)
-#                  133ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        124/        127)
-#                  134ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        125/        127)
-#                  135ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        126/        127)
-#                  136ns | Reset=0 Input=0 --- > Output:1
-# [OK] (        127/        127)
-#                  137ns | Reset=0 Input=0 --- > Output:1
+#                    1ns | Reset=0 Input=0 Start=0 --- > Output:0
+#                    2ns | Reset=0 Input=0 Start=0 --- > Output:0
+#                    3ns | Reset=0 Input=0 Start=0 --- > Output:0
+#                    4ns | Reset=0 Input=0 Start=0 --- > Output:0
+#                    5ns | Reset=0 Input=0 Start=0 --- > Output:0
+#                    6ns | Reset=0 Input=0 Start=0 --- > Output:0
+#                    7ns | Reset=0 Input=0 Start=0 --- > Output:0
+#                    8ns | Reset=0 Input=0 Start=0 --- > Output:0
+#                    9ns | Reset=0 Input=0 Start=0 --- > Output:0
+#                   10ns | Reset=1 Input=0 Start=0 --- > Output:0
+#                   11ns | Reset=0 Input=0 Start=1 --- > Output:0
+#                   12ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (          1/        288)
+#                   13ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (          2/        288)
+#                   14ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (          3/        288)
+#                   15ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (          4/        288)
+#                   16ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (          5/        288)
+#                   17ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (          6/        288)
+#                   18ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (          7/        288)
+#                   19ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (          8/        288)
+#                   20ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (          9/        288)
+#                   21ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         10/        288)
+#                   22ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         11/        288)
+#                   23ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         12/        288)
+#                   24ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         13/        288)
+#                   25ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         14/        288)
+#                   26ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         15/        288)
+#                   27ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         16/        288)
+#                   28ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         17/        288)
+#                   29ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         18/        288)
+#                   30ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         19/        288)
+#                   31ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         20/        288)
+#                   32ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         21/        288)
+#                   33ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         22/        288)
+#                   34ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         23/        288)
+#                   35ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         24/        288)
+#                   36ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         25/        288)
+#                   37ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         26/        288)
+#                   38ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         27/        288)
+#                   39ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         28/        288)
+#                   40ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         29/        288)
+#                   41ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         30/        288)
+#                   42ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         31/        288)
+#                   43ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         32/        288)
+#                   44ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         33/        288)
+#                   45ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         34/        288)
+#                   46ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         35/        288)
+#                   47ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         36/        288)
+#                   48ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         37/        288)
+#                   49ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         38/        288)
+#                   50ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         39/        288)
+#                   51ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         40/        288)
+#                   52ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         41/        288)
+#                   53ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         42/        288)
+#                   54ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         43/        288)
+#                   55ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         44/        288)
+#                   56ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         45/        288)
+#                   57ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         46/        288)
+#                   58ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         47/        288)
+#                   59ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         48/        288)
+#                   60ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         49/        288)
+#                   61ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         50/        288)
+#                   62ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         51/        288)
+#                   63ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         52/        288)
+#                   64ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         53/        288)
+#                   65ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         54/        288)
+#                   66ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         55/        288)
+#                   67ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         56/        288)
+#                   68ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         57/        288)
+#                   69ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         58/        288)
+#                   70ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         59/        288)
+#                   71ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         60/        288)
+#                   72ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         61/        288)
+#                   73ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         62/        288)
+#                   74ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         63/        288)
+#                   75ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         64/        288)
+#                   76ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         65/        288)
+#                   77ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         66/        288)
+#                   78ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         67/        288)
+#                   79ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         68/        288)
+#                   80ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         69/        288)
+#                   81ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         70/        288)
+#                   82ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         71/        288)
+#                   83ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         72/        288)
+#                   84ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         73/        288)
+#                   85ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         74/        288)
+#                   86ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         75/        288)
+#                   87ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         76/        288)
+#                   88ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         77/        288)
+#                   89ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         78/        288)
+#                   90ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         79/        288)
+#                   91ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         80/        288)
+#                   92ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         81/        288)
+#                   93ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         82/        288)
+#                   94ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         83/        288)
+#                   95ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         84/        288)
+#                   96ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         85/        288)
+#                   97ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         86/        288)
+#                   98ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         87/        288)
+#                   99ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         88/        288)
+#                  100ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         89/        288)
+#                  101ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         90/        288)
+#                  102ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         91/        288)
+#                  103ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         92/        288)
+#                  104ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         93/        288)
+#                  105ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         94/        288)
+#                  106ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         95/        288)
+#                  107ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         96/        288)
+#                  108ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (         97/        288)
+#                  109ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         98/        288)
+#                  110ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (         99/        288)
+#                  111ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        100/        288)
+#                  112ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        101/        288)
+#                  113ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        102/        288)
+#                  114ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        103/        288)
+#                  115ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        104/        288)
+#                  116ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        105/        288)
+#                  117ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        106/        288)
+#                  118ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        107/        288)
+#                  119ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        108/        288)
+#                  120ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        109/        288)
+#                  121ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        110/        288)
+#                  122ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        111/        288)
+#                  123ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        112/        288)
+#                  124ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        113/        288)
+#                  125ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        114/        288)
+#                  126ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        115/        288)
+#                  127ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        116/        288)
+#                  128ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        117/        288)
+#                  129ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        118/        288)
+#                  130ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        119/        288)
+#                  131ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        120/        288)
+#                  132ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        121/        288)
+#                  133ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        122/        288)
+#                  134ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        123/        288)
+#                  135ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        124/        288)
+#                  136ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        125/        288)
+#                  137ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        126/        288)
+#                  138ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        127/        288)
+#                  139ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        128/        288)
+#                  140ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        129/        288)
+#                  141ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        130/        288)
+#                  142ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        131/        288)
+#                  143ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        132/        288)
+#                  144ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        133/        288)
+#                  145ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        134/        288)
+#                  146ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        135/        288)
+#                  147ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [DATA_INPUT::START]
+# [OK] (        136/        288)
+#                  148ns | Reset=0 Input=1 Start=0 --- > Output:0
+# [OK] (        137/        288)
+#                  149ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        138/        288)
+#                  150ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        139/        288)
+#                  151ns | Reset=0 Input=1 Start=0 --- > Output:0
+# [DATA_INPUT::END]
+# [OK] (        140/        288)
+#                  152ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        141/        288)
+#                  153ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        142/        288)
+#                  154ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        143/        288)
+#                  155ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        144/        288)
+#                  156ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        145/        288)
+#                  157ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        146/        288)
+#                  158ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        147/        288)
+#                  159ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        148/        288)
+#                  160ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        149/        288)
+#                  161ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        150/        288)
+#                  162ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        151/        288)
+#                  163ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        152/        288)
+#                  164ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        153/        288)
+#                  165ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        154/        288)
+#                  166ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        155/        288)
+#                  167ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        156/        288)
+#                  168ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        157/        288)
+#                  169ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        158/        288)
+#                  170ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        159/        288)
+#                  171ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        160/        288)
+#                  172ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        161/        288)
+#                  173ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        162/        288)
+#                  174ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        163/        288)
+#                  175ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        164/        288)
+#                  176ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        165/        288)
+#                  177ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        166/        288)
+#                  178ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        167/        288)
+#                  179ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        168/        288)
+#                  180ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        169/        288)
+#                  181ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        170/        288)
+#                  182ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        171/        288)
+#                  183ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        172/        288)
+#                  184ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        173/        288)
+#                  185ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        174/        288)
+#                  186ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        175/        288)
+#                  187ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        176/        288)
+#                  188ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        177/        288)
+#                  189ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        178/        288)
+#                  190ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        179/        288)
+#                  191ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        180/        288)
+#                  192ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        181/        288)
+#                  193ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        182/        288)
+#                  194ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        183/        288)
+#                  195ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        184/        288)
+#                  196ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        185/        288)
+#                  197ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        186/        288)
+#                  198ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        187/        288)
+#                  199ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        188/        288)
+#                  200ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        189/        288)
+#                  201ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        190/        288)
+#                  202ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        191/        288)
+#                  203ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        192/        288)
+#                  204ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        193/        288)
+#                  205ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        194/        288)
+#                  206ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        195/        288)
+#                  207ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        196/        288)
+#                  208ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        197/        288)
+#                  209ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        198/        288)
+#                  210ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        199/        288)
+#                  211ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        200/        288)
+#                  212ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        201/        288)
+#                  213ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        202/        288)
+#                  214ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        203/        288)
+#                  215ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        204/        288)
+#                  216ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        205/        288)
+#                  217ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        206/        288)
+#                  218ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        207/        288)
+#                  219ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        208/        288)
+#                  220ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        209/        288)
+#                  221ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        210/        288)
+#                  222ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        211/        288)
+#                  223ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        212/        288)
+#                  224ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        213/        288)
+#                  225ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        214/        288)
+#                  226ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        215/        288)
+#                  227ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        216/        288)
+#                  228ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        217/        288)
+#                  229ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        218/        288)
+#                  230ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        219/        288)
+#                  231ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        220/        288)
+#                  232ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        221/        288)
+#                  233ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        222/        288)
+#                  234ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        223/        288)
+#                  235ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        224/        288)
+#                  236ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        225/        288)
+#                  237ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        226/        288)
+#                  238ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        227/        288)
+#                  239ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        228/        288)
+#                  240ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        229/        288)
+#                  241ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        230/        288)
+#                  242ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        231/        288)
+#                  243ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        232/        288)
+#                  244ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        233/        288)
+#                  245ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        234/        288)
+#                  246ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        235/        288)
+#                  247ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        236/        288)
+#                  248ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        237/        288)
+#                  249ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        238/        288)
+#                  250ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        239/        288)
+#                  251ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        240/        288)
+#                  252ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        241/        288)
+#                  253ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        242/        288)
+#                  254ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        243/        288)
+#                  255ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        244/        288)
+#                  256ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        245/        288)
+#                  257ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        246/        288)
+#                  258ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        247/        288)
+#                  259ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        248/        288)
+#                  260ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        249/        288)
+#                  261ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        250/        288)
+#                  262ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        251/        288)
+#                  263ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        252/        288)
+#                  264ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        253/        288)
+#                  265ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        254/        288)
+#                  266ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        255/        288)
+#                  267ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        256/        288)
+#                  268ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        257/        288)
+#                  269ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        258/        288)
+#                  270ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        259/        288)
+#                  271ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        260/        288)
+#                  272ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        261/        288)
+#                  273ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        262/        288)
+#                  274ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        263/        288)
+#                  275ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        264/        288)
+#                  276ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        265/        288)
+#                  277ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        266/        288)
+#                  278ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        267/        288)
+#                  279ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        268/        288)
+#                  280ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        269/        288)
+#                  281ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        270/        288)
+#                  282ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        271/        288)
+#                  283ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        272/        288)
+#                  284ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        273/        288)
+#                  285ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        274/        288)
+#                  286ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        275/        288)
+#                  287ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        276/        288)
+#                  288ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        277/        288)
+#                  289ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        278/        288)
+#                  290ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        279/        288)
+#                  291ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        280/        288)
+#                  292ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        281/        288)
+#                  293ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        282/        288)
+#                  294ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        283/        288)
+#                  295ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        284/        288)
+#                  296ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        285/        288)
+#                  297ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        286/        288)
+#                  298ns | Reset=0 Input=0 Start=0 --- > Output:1
+# [OK] (        287/        288)
+#                  299ns | Reset=0 Input=0 Start=0 --- > Output:0
+# [OK] (        288/        288)
+#                  300ns | Reset=0 Input=0 Start=0 --- > Output:0
 # ALL TEST PASSED. :)
