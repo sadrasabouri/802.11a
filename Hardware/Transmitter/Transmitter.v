@@ -55,6 +55,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     parameter [0:8*12-1] PREAMBLE_SYMBOLS = {8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA};
+    parameter SIGNAL_RATE_STATE = 2;
 
     always @(posedge Clock, posedge Reset)
     begin
@@ -75,6 +76,18 @@ module Transmitter(Start, Input, Reset, Clock, Output);
         else
         begin
             case (CURRENT_STATE)
+                PLCP_PREAMBLE_STATE:
+                begin
+                    is_scramble <= 1'b0;
+                    transmitter_out <= PREAMBLE_SYMBOLS[TURNS_PLCP_PREAMBLE];
+                    if (TURNS_PLCP_PREAMBLE >= MAX_TURNS_PLCP_PREAMBLE)     //  Reached to the end
+                    begin
+                        CURRENT_STATE <= SIGNAL_RATE_STATE;
+                        TURNS_PLCP_PREAMBLE <= 8'h00;
+                    end
+                    else
+                        TURNS_PLCP_PREAMBLE <= TURNS_PLCP_PREAMBLE + 8'h01;
+                end
                 default:
                 begin
                     transmitter_out <= 1'b0;
