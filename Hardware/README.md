@@ -39,3 +39,18 @@ Output Data --> | DeScrambler  | <------ from Antenna
                 |              |
                 +--------------+
 ```
+
+
+This directory contains different files:
+
+## [ِDUT.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/DUT.v)
+Whole design under test module.
+
+## [DUT_tb.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/DUT_tb.v)
+Design under test Verilog test bench.
+
+## [DUT_tb.txt](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/DUT_tb.txt)
+Design under test Verilog test bench.
+
+## [DUT.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Transmitter.m)
+Transmitter matlab test script.
