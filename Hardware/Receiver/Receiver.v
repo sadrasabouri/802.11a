@@ -1,6 +1,6 @@
 `include "DeScrambler/DeScrambler.v"
 
-module Transmitter(Input, Reset, Clock, Output);
+module Receiver(Input, Reset, Clock, Output);
 /*
  * Module `Receiver`
  *
