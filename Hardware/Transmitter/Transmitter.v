@@ -62,12 +62,13 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     //          Rate state:
     parameter [3:0] SIGNAL_RATE_STATE = 2;
     reg [1:0] TURNS_RATE_STATE;
-    parameter [3:0] RATE = 6;               //  Data Rate (Little Endian)
+    parameter [0:3] RATE = 4'b1101;          // =6  [Data Rate (Big Endian)]
     //          Reserved:
     parameter [3:0] SIGNAL_RESERVERD_STATE = 3;
     //          LENGTH:
     parameter [3:0] SIGNAL_LENGTH_STATE = 4;
     reg [4:0] TURNS_LENGTH_STATE;
+    parameter [0:11] LENGTH = 12'h10;        // =16  [Octet Numbers of Data (Big Endian)]
     
     //  Wifi-Frame FSM - Graph:
     always @(posedge Clock, posedge Reset)
@@ -124,6 +125,20 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     transmitter_out <= 1'b0;    //  Reserver bit
 
                     CURRENT_STATE <= SIGNAL_LENGTH_STATE;
+                end
+                SIGNAL_LENGTH_STATE:
+                begin
+                    is_scramble <= 1'b0;
+                    transmitter_out <= LENGTH[TURNS_LENGTH_STATE];
+
+                    //  Reached to the end of Rate sub-frame
+                    if (TURNS_LENGTH_STATE >= 12)
+                    begin
+                        CURRENT_STATE <= SIGNAL_PARITY_STATE;
+                        TURNS_LENGTH_STATE <= 2'b00;
+                    end
+                    else
+                        TURNS_LENGTH_STATE <= TURNS_LENGTH_STATE + 2'b01;
                 end
                 default:
                 begin
