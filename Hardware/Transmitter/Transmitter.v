@@ -31,7 +31,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
 
     //  Scrambler Instatiation:
     wire scrambler_out;
-    wire scrambler_reset;
+    reg scrambler_reset;
     reg scrambler_in;
     Scrambler scrambler(
         .Input(scrambler_in),
@@ -74,12 +74,18 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     //          TAIL:
     parameter [3:0] SIGNAL_TAIL_STATE = 6;
     reg [2:0] TURNS_TAIL_STATE;
+    //      Service state:
+    parameter [3:0] SIGNAL_SERVICE_STATE = 7;
+    reg [3:0] TURNS_SERVICE_STATE;
+
 
     //  Wifi-Frame FSM - Graph:
     always @(posedge Clock, posedge Reset)
     begin
         if (Reset)      //  Reset State
         begin
+            scrambler_reset <= 1'b1;
+            scrambler_in <= 1'b0;
             transmitter_out <= 1'b0;
             is_scramble <= 1'b0;
             CURRENT_STATE <= IDLE_STATE; 
@@ -87,16 +93,21 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             TURNS_RATE_STATE <= 2'b00;
             TURNS_LENGTH_STATE <= 4'h0;
             TURNS_TAIL_STATE <= 3'b000;
+            TURNS_SERVICE_STATE <= 4'b0000;
         end
         else if (Start) //  Start State
         begin
             CURRENT_STATE <= PLCP_PREAMBLE_STATE;
             is_scramble <= 1'b0;
             transmitter_out <= 1'b0;
+            scrambler_reset <= 1'b0;
         end
         else
         begin
             case (CURRENT_STATE)
+                //  ------------------------------------
+                //          PLCP_PREAMBLE::START
+                //  ------------------------------------
                 PLCP_PREAMBLE_STATE:
                 begin
                     is_scramble <= 1'b0;
@@ -111,6 +122,9 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     else
                         TURNS_PLCP_PREAMBLE <= TURNS_PLCP_PREAMBLE + 8'h01;
                 end
+                //  ------------------------------------
+                //  PLCP_PREAMBLE::END     SIGNAL::START
+                //  ------------------------------------
                 SIGNAL_RATE_STATE:
                 begin
                     is_scramble <= 1'b0;
@@ -168,12 +182,35 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     begin
                         CURRENT_STATE <= SIGNAL_SERVICE_STATE;
                         TURNS_TAIL_STATE <= 3'b000;
+                        scrambler_reset <= 1'b1;    //  Reseting Scrambler
                     end
                     else
                         TURNS_TAIL_STATE <= TURNS_TAIL_STATE + 3'b001;
                 end
+                //  ------------------------------------
+                //  SIGNAL::END             DATA::START
+                //  ------------------------------------
+                SIGNAL_SERVICE_STATE:
+                begin
+                    scrambler_reset <= 1'b0;
+                    is_scramble <= 1'b1;
+                    scrambler_in <= 1'b0;
+
+                    //  Reached to the end of service sub-frame
+                    if (TURNS_SERVICE_STATE >= 15)
+                    begin
+                        CURRENT_STATE <= SIGNAL_PSDU_STATE;
+                        TURNS_SERVICE_STATE <= 4'b0000;
+                    end
+                    else
+                        TURNS_SERVICE_STATE <= TURNS_SERVICE_STATE + 4'b0001;
+                end
+                //  ------------------------------------
+                //               DATA::END
+                //  ------------------------------------
                 default:
                 begin
+                    scrambler_reset <= 1'b0;
                     transmitter_out <= 1'b0;
                     is_scramble <= 1'b0;
                     CURRENT_STATE <= IDLE_STATE;
@@ -181,6 +218,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     TURNS_RATE_STATE <= 2'b00;
                     TURNS_LENGTH_STATE <= 4'h0;
                     TURNS_TAIL_STATE <= 3'b000;
+                    TURNS_SERVICE_STATE <= 4'b0000;
                 end
             endcase
         end
