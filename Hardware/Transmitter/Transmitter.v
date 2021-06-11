@@ -54,7 +54,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     //      PLCP Preamble state:
     parameter [3:0] PLCP_PREAMBLE_STATE = 1;
     reg [7:0] TURNS_PLCP_PREAMBLE;
-    parameter MAX_TURNS_PLCP_PREAMBLE = 96; //  = 12 * 8 (12 Symbols, each symbol's a byte)
+    parameter MAX_TURNS_PLCP_PREAMBLE = 95; //  = 12 * 8 - 1 (12 Symbols, each symbol's a byte)
     parameter [0:8*12-1] PREAMBLE_SYMBOLS = {8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA};
