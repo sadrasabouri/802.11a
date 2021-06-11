@@ -11,6 +11,7 @@ Output Data --> | DeScrambler | <------ from Antenna
                 |              |
                 +--------------+
 ```
+
 This directory contains different files:
 
 ## [Receiver.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/Receiver.v)
