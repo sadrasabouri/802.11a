@@ -34,7 +34,7 @@ module DUT(Start, Input, Reset, Clock, Antenna, Output);
     output wire Output;
 
     Transmitter transmitter(
-        .Start(Start)
+        .Start(Start),
         .Input(Input),
         .Reset(Reset),
         .Clock(Clock),
