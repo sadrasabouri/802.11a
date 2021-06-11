@@ -68,7 +68,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     //          LENGTH:
     parameter [3:0] SIGNAL_LENGTH_STATE = 4;
     reg [3:0] TURNS_LENGTH_STATE;
-    parameter [0:11] LENGTH = 12'h10;        // =16  [Octet Numbers of Data (Big Endian)]
+    parameter [0:11] LENGTH = 12'h010;        // =16  [Octet Numbers of Data (Big Endian)]
     //          PARITY:
     parameter [3:0] SIGNAL_PARITY_STATE = 5;
     //          TAIL:
@@ -128,12 +128,6 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     is_scramble <= 1'b0;
                     transmitter_out <= PREAMBLE_SYMBOLS[TURNS_PLCP_PREAMBLE];
 
-                    //  Pad bits:
-                    if (DPBS_REMAINDER == N_DBPS)
-                        DPBS_REMAINDER <= 8'h01;
-                    else
-                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
-
                     //  Reached to the end of PLCP sub-frame
                     if (TURNS_PLCP_PREAMBLE >= MAX_TURNS_PLCP_PREAMBLE)
                     begin
@@ -151,12 +145,6 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     is_scramble <= 1'b0;
                     transmitter_out <= RATE[TURNS_RATE_STATE];
 
-                    //  Pad bits:
-                    if (DPBS_REMAINDER == N_DBPS)
-                        DPBS_REMAINDER <= 8'h01;
-                    else
-                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
-
                     //  Reached to the end of Rate sub-frame
                     if (TURNS_RATE_STATE == 2'b11)
                     begin
@@ -171,24 +159,12 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     is_scramble <= 1'b0;
                     transmitter_out <= 1'b0;    //  Reserver bit
 
-                    //  Pad bits:
-                    if (DPBS_REMAINDER == N_DBPS)
-                        DPBS_REMAINDER <= 8'h01;
-                    else
-                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
-
                     CURRENT_STATE <= SIGNAL_LENGTH_STATE;
                 end
                 SIGNAL_LENGTH_STATE:
                 begin
                     is_scramble <= 1'b0;
                     transmitter_out <= LENGTH[TURNS_LENGTH_STATE];
-
-                    //  Pad bits:
-                    if (DPBS_REMAINDER == N_DBPS)
-                        DPBS_REMAINDER <= 8'h01;
-                    else
-                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
 
                     //  Reached to the end of lenght sub-frame
                     if (TURNS_LENGTH_STATE >= 12)
@@ -208,12 +184,6 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                                           {LENGTH}  //  12 bits Data LENGTH
                                         };
 
-                    //  Pad bits:
-                    if (DPBS_REMAINDER == N_DBPS)
-                        DPBS_REMAINDER <= 8'h01;
-                    else
-                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
-
                     //  Reached to the end of Parity sub-frame
                     CURRENT_STATE <= SIGNAL_TAIL_STATE;
                 end
@@ -221,12 +191,6 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                 begin
                     is_scramble <= 1'b0;
                     transmitter_out <= 1'b0;        //  =0 Tail bit
-
-                    //  Pad bits:
-                    if (DPBS_REMAINDER == N_DBPS)
-                        DPBS_REMAINDER <= 8'h01;
-                    else
-                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
 
                     //  Reached to the end of tail sub-frame
                     if (TURNS_TAIL_STATE >= 6)
