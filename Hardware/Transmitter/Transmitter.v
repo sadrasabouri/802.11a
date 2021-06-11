@@ -65,7 +65,10 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     parameter [3:0] RATE = 6;               //  Data Rate (Little Endian)
     //          Reserved:
     parameter [3:0] SIGNAL_RESERVERD_STATE = 3;
-
+    //          LENGTH:
+    parameter [3:0] SIGNAL_LENGTH_STATE = 4;
+    reg [4:0] TURNS_LENGTH_STATE;
+    
     //  Wifi-Frame FSM - Graph:
     always @(posedge Clock, posedge Reset)
     begin
@@ -76,6 +79,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             CURRENT_STATE <= IDLE_STATE; 
             TURNS_PLCP_PREAMBLE <= 8'h00;
             TURNS_RATE_STATE <= 2'b00;
+            TURNS_LENGTH_STATE <= 4'h0;
         end
         else if (Start) //  Start State
         begin
@@ -105,7 +109,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     is_scramble <= 1'b0;
                     transmitter_out <= RATE[TURNS_RATE_STATE];
 
-                    //  Reached to the end of PLCP sub-frame
+                    //  Reached to the end of Rate sub-frame
                     if (TURNS_RATE_STATE == 2'b11)
                     begin
                         CURRENT_STATE <= SIGNAL_RESERVERD_STATE;
@@ -114,6 +118,13 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     else
                         TURNS_RATE_STATE <= TURNS_RATE_STATE + 2'b01;
                 end
+                SIGNAL_RESERVERD_STATE:
+                begin
+                    is_scramble <= 1'b0;
+                    transmitter_out <= 1'b0;    //  Reserver bit
+
+                    CURRENT_STATE <= SIGNAL_LENGTH_STATE;
+                end
                 default:
                 begin
                     transmitter_out <= 1'b0;
@@ -121,6 +132,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     CURRENT_STATE <= IDLE_STATE;
                     TURNS_PLCP_PREAMBLE <= 8'h00;
                     TURNS_RATE_STATE <= 2'b00;
+                    TURNS_LENGTH_STATE <= 4'h0;
                 end
             endcase
         end
