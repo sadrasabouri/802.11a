@@ -80,7 +80,9 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                 begin
                     is_scramble <= 1'b0;
                     transmitter_out <= PREAMBLE_SYMBOLS[TURNS_PLCP_PREAMBLE];
-                    if (TURNS_PLCP_PREAMBLE >= MAX_TURNS_PLCP_PREAMBLE)     //  Reached to the end
+
+                    //  Reached to the end of PLCP sub-frame
+                    if (TURNS_PLCP_PREAMBLE >= MAX_TURNS_PLCP_PREAMBLE)
                     begin
                         CURRENT_STATE <= SIGNAL_RATE_STATE;
                         TURNS_PLCP_PREAMBLE <= 8'h00;
