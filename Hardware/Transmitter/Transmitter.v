@@ -50,9 +50,9 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     reg CURRENT_STATE;
     parameter IDLE_STATE = 0;
     parameter PLCP_PREAMBLE_STATE = 1;
-    reg TURNS_PLCP_PREAMBLE = 4'h0;
-    parameter MAX_TURNS_PLCP_PREAMBLE = 12;
-    parameter [8*12-1:0] PREAMBLE_SYMBOLS = {8'hAA, 8'hAA, 8'hAA, 8'hAA,
+    reg TURNS_PLCP_PREAMBLE = 8'h00;
+    parameter MAX_TURNS_PLCP_PREAMBLE = 96; //  = 12 * 8 (12 Symbols, each symbol a byte)
+    parameter [0:8*12-1] PREAMBLE_SYMBOLS = {8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA};
 
@@ -69,7 +69,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             CURRENT_STATE <= PLCP_PREAMBLE_STATE;
             is_scramble <= 1'b0;
             transmitter_out <= 1'b0;
-            TURNS_PLCP_PREAMBLE <= 4'h0;
+            TURNS_PLCP_PREAMBLE <= 8'h00;
         end
         else
         begin
