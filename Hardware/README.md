@@ -13,6 +13,7 @@ Wifi frame which is going to be used here is as fallows:
 
 ### [Transmitter](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter)
 [Transmitter](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Transmitter.v) module has the rule of converting `input` data after `start` to wifi frame and send it to antenna.
+User should set the `start` for a clock and then wait for `12 * 8 + 4 + 1 + 12 + 1 + 6 + 16 = 136` clocks and then send in the input data which should be `Transmitter.LENGTH` octets (Bytes) then for resending you should set `start` for a clock again.
 This part contains transmitter part of the protocol which simply breaks into 3 part:
 
 1. [Scrambler](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Scrambler)
