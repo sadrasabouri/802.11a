@@ -46,17 +46,27 @@ module Transmitter(Start, Input, Reset, Clock, Output);
         Output <= is_scramble ? scrambler_out : transmitter_out;
 
 
-    //  Wifi-Frame FSM:
-    reg CURRENT_STATE;
-    parameter IDLE_STATE = 0;
-    parameter PLCP_PREAMBLE_STATE = 1;
-    reg TURNS_PLCP_PREAMBLE = 8'h00;
-    parameter MAX_TURNS_PLCP_PREAMBLE = 96; //  = 12 * 8 (12 Symbols, each symbol a byte)
+    //  Wifi-Frame - Parameters:
+    //      Current state register:
+    reg [3:0] CURRENT_STATE;
+    //      IDLE state:
+    parameter [3:0] IDLE_STATE = 0;
+    //      PLCP Preamble state:
+    parameter [3:0] PLCP_PREAMBLE_STATE = 1;
+    reg [7:0] TURNS_PLCP_PREAMBLE;
+    parameter MAX_TURNS_PLCP_PREAMBLE = 96; //  = 12 * 8 (12 Symbols, each symbol's a byte)
     parameter [0:8*12-1] PREAMBLE_SYMBOLS = {8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA};
-    parameter SIGNAL_RATE_STATE = 2;
+    //      Signal state:
+    //          Rate state:
+    parameter [3:0] SIGNAL_RATE_STATE = 2;
+    reg [1:0] TURNS_RATE_STATE;
+    parameter [3:0] RATE = 6;               //  Data Rate (Little Endian)
+    //          Reserved:
+    parameter [3:0] SIGNAL_RESERVERD_STATE = 3;
 
+    //  Wifi-Frame FSM - Graph:
     always @(posedge Clock, posedge Reset)
     begin
         if (Reset)      //  Reset State
@@ -65,13 +75,13 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             is_scramble <= 1'b0;
             CURRENT_STATE <= IDLE_STATE; 
             TURNS_PLCP_PREAMBLE <= 8'h00;
+            TURNS_RATE_STATE <= 2'b00;
         end
         else if (Start) //  Start State
         begin
             CURRENT_STATE <= PLCP_PREAMBLE_STATE;
             is_scramble <= 1'b0;
             transmitter_out <= 1'b0;
-            TURNS_PLCP_PREAMBLE <= 8'h00;
         end
         else
         begin
@@ -90,12 +100,27 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     else
                         TURNS_PLCP_PREAMBLE <= TURNS_PLCP_PREAMBLE + 8'h01;
                 end
+                SIGNAL_RATE_STATE:
+                begin
+                    is_scramble <= 1'b0;
+                    transmitter_out <= RATE[TURNS_RATE_STATE];
+
+                    //  Reached to the end of PLCP sub-frame
+                    if (TURNS_RATE_STATE == 2'b11)
+                    begin
+                        CURRENT_STATE <= SIGNAL_RESERVERD_STATE;
+                        TURNS_RATE_STATE <= 2'b00;
+                    end
+                    else
+                        TURNS_RATE_STATE <= TURNS_RATE_STATE + 2'b01;
+                end
                 default:
                 begin
                     transmitter_out <= 1'b0;
                     is_scramble <= 1'b0;
-                    CURRENT_STATE <= IDLE_STATE; 
+                    CURRENT_STATE <= IDLE_STATE;
                     TURNS_PLCP_PREAMBLE <= 8'h00;
+                    TURNS_RATE_STATE <= 2'b00;
                 end
             endcase
         end
