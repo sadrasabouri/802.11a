@@ -228,6 +228,20 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     else
                         TURNS_PSDU_STATE <= TURNS_PSDU_STATE + 15'b000_0000_0000_0001;
                 end
+                SIGNAL_TAIL2_STATE:
+                begin
+                    is_scramble <= 1'b1;
+                    scrambler_in <= 1'b0;        //  =0 Tail bit
+
+                    //  Reached to the end of tail sub-frame
+                    if (TURNS_TAIL2_STATE >= 6)
+                    begin
+                        CURRENT_STATE <= SIGNAL_PADBITS_STATE;
+                        TURNS_TAIL2_STATE <= 3'b000;
+                    end
+                    else
+                        TURNS_TAIL2_STATE <= TURNS_TAIL_STATE + 3'b001;
+                end
                 //  ------------------------------------
                 //               DATA::END
                 //  ------------------------------------
