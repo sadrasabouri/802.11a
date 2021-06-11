@@ -69,7 +69,10 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     parameter [3:0] SIGNAL_LENGTH_STATE = 4;
     reg [4:0] TURNS_LENGTH_STATE;
     parameter [0:11] LENGTH = 12'h10;        // =16  [Octet Numbers of Data (Big Endian)]
-    
+    //          PARITY:
+    parameter [3:0] SIGNAL_PARITY_STATE = 5;
+
+
     //  Wifi-Frame FSM - Graph:
     always @(posedge Clock, posedge Reset)
     begin
@@ -131,7 +134,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     is_scramble <= 1'b0;
                     transmitter_out <= LENGTH[TURNS_LENGTH_STATE];
 
-                    //  Reached to the end of Rate sub-frame
+                    //  Reached to the end of lenght sub-frame
                     if (TURNS_LENGTH_STATE >= 12)
                     begin
                         CURRENT_STATE <= SIGNAL_PARITY_STATE;
@@ -139,6 +142,18 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     end
                     else
                         TURNS_LENGTH_STATE <= TURNS_LENGTH_STATE + 2'b01;
+                end
+                SIGNAL_PARITY_STATE:
+                begin
+                    is_scramble <= 1'b0;
+                    //  Calculate even parity of 0-16 bits
+                    transmitter_out <= ^{ {RATE},   //  4  bits Data Rate
+                                          {1'b0},   //  1  bit Reserved
+                                          {LENGTH} //  12 bits Data LENGTH
+                                        };
+
+                    //  Reached to the end of Parity sub-frame
+                    CURRENT_STATE <= SIGNAL_TAIL_STATE;
                 end
                 default:
                 begin
