@@ -18,3 +18,20 @@ Input Data --> | Scrambler +------> to Antenna
                |           |
                +-----------+
 ```
+
+This directory contains different files:
+
+## [Transmitter.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Transmitter.v)
+Transmitter Verilog module.
+
+## [Transmitter_tb.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Transmitter_tb.v)
+Transmitter Verilog test bench which will be used as a unit test.
+
+## [Transmitter_tb.txt](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Transmitter_tb.txt)
+Transmitter Verilog test bench result.
+
+## [Transmitter.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Transmitter.m)
+Transmitter matlab function which will be used as a software simulation for HDL module.
+
+## [Transmitter_test.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Transmitter_test.m)
+Transmitter matlab function test.
