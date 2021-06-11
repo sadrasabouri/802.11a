@@ -74,9 +74,16 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     //          TAIL:
     parameter [3:0] SIGNAL_TAIL_STATE = 6;
     reg [2:0] TURNS_TAIL_STATE;
-    //      Service state:
+    //      Data state:
+    //          Service:
     parameter [3:0] SIGNAL_SERVICE_STATE = 7;
     reg [3:0] TURNS_SERVICE_STATE;
+    //          PSDU:
+    parameter [3:0] SIGNAL_PSDU_STATE = 8;
+    reg [14:0] TURNS_PSDU_STATE;            //  Maximum is 8 * (2 ^ 12 - 1)
+    //          Tail:
+    parameter [3:0] SIGNAL_TAIL2_STATE = 9;
+    reg [2:0] TURNS_TAIL2_STATE;
 
 
     //  Wifi-Frame FSM - Graph:
@@ -94,6 +101,8 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             TURNS_LENGTH_STATE <= 4'h0;
             TURNS_TAIL_STATE <= 3'b000;
             TURNS_SERVICE_STATE <= 4'b0000;
+            TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
+            TURNS_TAIL2_STATE <= 3'b000;
         end
         else if (Start) //  Start State
         begin
@@ -205,6 +214,20 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     else
                         TURNS_SERVICE_STATE <= TURNS_SERVICE_STATE + 4'b0001;
                 end
+                SIGNAL_PSDU_STATE:
+                begin
+                    is_scramble <= 1'b1;
+                    scrambler_in <= Input;
+
+                    //  Reached to the end of psdu sub-frame (LENGHT bytes = LENGHT << 3 bits)
+                    if (TURNS_PSDU_STATE + 15'b000_0000_0000_0001 >= {{LENGTH}, {3'b000}})
+                    begin
+                        CURRENT_STATE <= SIGNAL_TAIL2_STATE;
+                        TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
+                    end
+                    else
+                        TURNS_PSDU_STATE <= TURNS_PSDU_STATE + 15'b000_0000_0000_0001;
+                end
                 //  ------------------------------------
                 //               DATA::END
                 //  ------------------------------------
@@ -219,6 +242,8 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     TURNS_LENGTH_STATE <= 4'h0;
                     TURNS_TAIL_STATE <= 3'b000;
                     TURNS_SERVICE_STATE <= 4'b0000;
+                    TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
+                    TURNS_TAIL2_STATE <= 3'b000;
                 end
             endcase
         end
