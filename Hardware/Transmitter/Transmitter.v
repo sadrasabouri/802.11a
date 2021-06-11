@@ -76,14 +76,18 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     reg [2:0] TURNS_TAIL_STATE;
     //      Data state:
     //          Service:
-    parameter [3:0] SIGNAL_SERVICE_STATE = 7;
+    parameter [3:0] DATA_SERVICE_STATE = 7;
     reg [3:0] TURNS_SERVICE_STATE;
     //          PSDU:
-    parameter [3:0] SIGNAL_PSDU_STATE = 8;
+    parameter [3:0] DATA_PSDU_STATE = 8;
     reg [14:0] TURNS_PSDU_STATE;            //  Maximum is 8 * (2 ^ 12 - 1)
     //          Tail:
-    parameter [3:0] SIGNAL_TAIL2_STATE = 9;
-    reg [2:0] TURNS_TAIL2_STATE;
+    parameter [3:0] DATA_TAIL2_STATE = 9;
+    //          PAD_BITS:
+    parameter [3:0] DATA_PADBITS_STATE = 10;
+    parameter [7:0] N_DBPS = 24;
+    reg [7:0] DPBS_REMAINDER;               //  Remainder of frame length in division of N_DBPS
+    reg [7:0] TURNS_PADBITS_STATE;
 
 
     //  Wifi-Frame FSM - Graph:
@@ -102,7 +106,8 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             TURNS_TAIL_STATE <= 3'b000;
             TURNS_SERVICE_STATE <= 4'b0000;
             TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
-            TURNS_TAIL2_STATE <= 3'b000;
+            DPBS_REMAINDER <= 8'h00;
+            TURNS_PADBITS_STATE <= 8'h00;
         end
         else if (Start) //  Start State
         begin
@@ -110,6 +115,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             is_scramble <= 1'b0;
             transmitter_out <= 1'b0;
             scrambler_reset <= 1'b0;
+            DPBS_REMAINDER <= 8'h00;
         end
         else
         begin
@@ -121,6 +127,12 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                 begin
                     is_scramble <= 1'b0;
                     transmitter_out <= PREAMBLE_SYMBOLS[TURNS_PLCP_PREAMBLE];
+
+                    //  Pad bits:
+                    if (DPBS_REMAINDER == N_DBPS)
+                        DPBS_REMAINDER <= 8'h01;
+                    else
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
 
                     //  Reached to the end of PLCP sub-frame
                     if (TURNS_PLCP_PREAMBLE >= MAX_TURNS_PLCP_PREAMBLE)
@@ -139,6 +151,12 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     is_scramble <= 1'b0;
                     transmitter_out <= RATE[TURNS_RATE_STATE];
 
+                    //  Pad bits:
+                    if (DPBS_REMAINDER == N_DBPS)
+                        DPBS_REMAINDER <= 8'h01;
+                    else
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
+
                     //  Reached to the end of Rate sub-frame
                     if (TURNS_RATE_STATE == 2'b11)
                     begin
@@ -153,12 +171,24 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     is_scramble <= 1'b0;
                     transmitter_out <= 1'b0;    //  Reserver bit
 
+                    //  Pad bits:
+                    if (DPBS_REMAINDER == N_DBPS)
+                        DPBS_REMAINDER <= 8'h01;
+                    else
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
+
                     CURRENT_STATE <= SIGNAL_LENGTH_STATE;
                 end
                 SIGNAL_LENGTH_STATE:
                 begin
                     is_scramble <= 1'b0;
                     transmitter_out <= LENGTH[TURNS_LENGTH_STATE];
+
+                    //  Pad bits:
+                    if (DPBS_REMAINDER == N_DBPS)
+                        DPBS_REMAINDER <= 8'h01;
+                    else
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
 
                     //  Reached to the end of lenght sub-frame
                     if (TURNS_LENGTH_STATE >= 12)
@@ -178,6 +208,12 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                                           {LENGTH}  //  12 bits Data LENGTH
                                         };
 
+                    //  Pad bits:
+                    if (DPBS_REMAINDER == N_DBPS)
+                        DPBS_REMAINDER <= 8'h01;
+                    else
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
+
                     //  Reached to the end of Parity sub-frame
                     CURRENT_STATE <= SIGNAL_TAIL_STATE;
                 end
@@ -185,6 +221,12 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                 begin
                     is_scramble <= 1'b0;
                     transmitter_out <= 1'b0;        //  =0 Tail bit
+
+                    //  Pad bits:
+                    if (DPBS_REMAINDER == N_DBPS)
+                        DPBS_REMAINDER <= 8'h01;
+                    else
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
 
                     //  Reached to the end of tail sub-frame
                     if (TURNS_TAIL_STATE >= 6)
@@ -199,48 +241,84 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                 //  ------------------------------------
                 //  SIGNAL::END             DATA::START
                 //  ------------------------------------
-                SIGNAL_SERVICE_STATE:
+                DATA_SERVICE_STATE:
                 begin
                     scrambler_reset <= 1'b0;
                     is_scramble <= 1'b1;
                     scrambler_in <= 1'b0;
 
+                    //  Pad bits:
+                    if (DPBS_REMAINDER == N_DBPS)
+                        DPBS_REMAINDER <= 8'h01;
+                    else
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
+
                     //  Reached to the end of service sub-frame
                     if (TURNS_SERVICE_STATE >= 15)
                     begin
-                        CURRENT_STATE <= SIGNAL_PSDU_STATE;
+                        CURRENT_STATE <= DATA_PSDU_STATE;
                         TURNS_SERVICE_STATE <= 4'b0000;
                     end
                     else
                         TURNS_SERVICE_STATE <= TURNS_SERVICE_STATE + 4'b0001;
                 end
-                SIGNAL_PSDU_STATE:
+                DATA_PSDU_STATE:
                 begin
                     is_scramble <= 1'b1;
                     scrambler_in <= Input;
 
+                    //  Pad bits:
+                    if (DPBS_REMAINDER == N_DBPS)
+                        DPBS_REMAINDER <= 8'h01;
+                    else
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
+
                     //  Reached to the end of psdu sub-frame (LENGHT bytes = LENGHT << 3 bits)
                     if (TURNS_PSDU_STATE + 15'b000_0000_0000_0001 >= {{LENGTH}, {3'b000}})
                     begin
-                        CURRENT_STATE <= SIGNAL_TAIL2_STATE;
+                        CURRENT_STATE <= DATA_TAIL_STATE;
                         TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
                     end
                     else
                         TURNS_PSDU_STATE <= TURNS_PSDU_STATE + 15'b000_0000_0000_0001;
                 end
-                SIGNAL_TAIL2_STATE:
+                DATA_TAIL2_STATE:
                 begin
                     is_scramble <= 1'b1;
                     scrambler_in <= 1'b0;        //  =0 Tail bit
 
+                    //  Pad bits:
+                    if (DPBS_REMAINDER == N_DBPS)
+                        DPBS_REMAINDER <= 8'h01;
+                    else
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01;
+
                     //  Reached to the end of tail sub-frame
-                    if (TURNS_TAIL2_STATE >= 6)
+                    if (TURNS_TAIL_STATE >= 6)
                     begin
-                        CURRENT_STATE <= SIGNAL_PADBITS_STATE;
-                        TURNS_TAIL2_STATE <= 3'b000;
+                        CURRENT_STATE <= DATA_PADBITS_STATE;
+                        TURNS_TAIL_STATE <= 3'b000;
                     end
                     else
-                        TURNS_TAIL2_STATE <= TURNS_TAIL_STATE + 3'b001;
+                        TURNS_TAIL_STATE <= TURNS_TAIL_STATE + 3'b001;
+                end
+                DATA_PADBITS_STATE:
+                begin
+                    //  Pad bits:
+                    //      END OF FRAME
+                    if (DPBS_REMAINDER == N_DBPS)
+                    begin
+                        DPBS_REMAINDER <= 8'h00;
+                        CURRENT_STATE <= IDLE_STATE;
+                        is_scramble <= 1'b0;
+                        transmitter_out <= 1'b0; 
+                    end
+                    else
+                    begin
+                        DPBS_REMAINDER <= DPBS_REMAINDER + 8'h01; 
+                        is_scramble <= 1'b1;
+                        scrambler_in <= 1'b0;
+                    end
                 end
                 //  ------------------------------------
                 //               DATA::END
@@ -257,7 +335,8 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     TURNS_TAIL_STATE <= 3'b000;
                     TURNS_SERVICE_STATE <= 4'b0000;
                     TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
-                    TURNS_TAIL2_STATE <= 3'b000;
+                    DPBS_REMAINDER <= 8'h00;
+                    TURNS_PADBITS_STATE <= 8'h00;
                 end
             endcase
         end
