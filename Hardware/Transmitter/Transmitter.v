@@ -167,7 +167,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     transmitter_out <= LENGTH[TURNS_LENGTH_STATE];
 
                     //  Reached to the end of lenght sub-frame
-                    if (TURNS_LENGTH_STATE >= 12)
+                    if (TURNS_LENGTH_STATE >= 11)   //  12 - 1
                     begin
                         CURRENT_STATE <= SIGNAL_PARITY_STATE;
                         TURNS_LENGTH_STATE <= 2'b00;
@@ -193,7 +193,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     transmitter_out <= 1'b0;        //  =0 Tail bit
 
                     //  Reached to the end of tail sub-frame
-                    if (TURNS_TAIL_STATE >= 6)
+                    if (TURNS_TAIL_STATE >= 5)      //  6 - 1
                     begin
                         CURRENT_STATE <= DATA_SERVICE_STATE;
                         TURNS_TAIL_STATE <= 3'b000;
