@@ -3,6 +3,8 @@ This part contains receiver part of the protocol which simply breaks into 3 part
 
 1. [DeScrambler](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/DeScrambler)
 
+<img src="https://github.com/sadrasabouri/802.11a/blob/master/OtherFiles/Scrambler.PNG">
+
 ```
                 +--------------+ 
                 |              |

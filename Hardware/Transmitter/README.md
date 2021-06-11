@@ -13,6 +13,8 @@ S(x) = x ^ 7 + x ^ 4 + 1
 
 With initial value of (x_7, x_6, x_5, x_4, x_3, x_2, x_1) = (1, 1, 1, 1, 1, 1, 1) 
 
+<img src="https://github.com/sadrasabouri/802.11a/blob/master/OtherFiles/Scrambler.PNG">
+
 ```
                +-----------+
                |           |
