@@ -27,7 +27,7 @@ Input Data --> | Scrambler +------> to Antenna
 ```
 
 ### [Receiver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver)
-This part contains receiver part of the protocol which simply breaks into 3 part:
+[Receiver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/Receiver.v) part contains receiver part of the protocol which simply breaks into 3 part:
 
 1. [DeScrambler](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/DeScrambler)
 
