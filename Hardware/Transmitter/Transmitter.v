@@ -63,6 +63,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             transmitter_out <= 1'b0;
             is_scramble <= 1'b0;
             CURRENT_STATE <= IDLE_STATE; 
+            TURNS_PLCP_PREAMBLE <= 8'h00;
         end
         else if (Start) //  Start State
         begin
@@ -73,7 +74,15 @@ module Transmitter(Start, Input, Reset, Clock, Output);
         end
         else
         begin
-            
+            case (CURRENT_STATE)
+                default:
+                begin
+                    transmitter_out <= 1'b0;
+                    is_scramble <= 1'b0;
+                    CURRENT_STATE <= IDLE_STATE; 
+                    TURNS_PLCP_PREAMBLE <= 8'h00;
+                end
+            endcase
         end
     end
 endmodule
