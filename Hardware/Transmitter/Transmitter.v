@@ -82,7 +82,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     parameter [3:0] DATA_PSDU_STATE = 8;
     reg [14:0] TURNS_PSDU_STATE;            //  Maximum is 8 * (2 ^ 12 - 1)
     //          Tail:
-    parameter [3:0] DATA_TAIL2_STATE = 9;
+    parameter [3:0] DATA_TAIL_STATE = 9;
     //          PAD_BITS:
     parameter [3:0] DATA_PADBITS_STATE = 10;
     parameter [7:0] N_DBPS = 24;
@@ -231,7 +231,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     //  Reached to the end of tail sub-frame
                     if (TURNS_TAIL_STATE >= 6)
                     begin
-                        CURRENT_STATE <= SIGNAL_SERVICE_STATE;
+                        CURRENT_STATE <= DATA_SERVICE_STATE;
                         TURNS_TAIL_STATE <= 3'b000;
                         scrambler_reset <= 1'b1;    //  Reseting Scrambler
                     end
@@ -282,7 +282,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     else
                         TURNS_PSDU_STATE <= TURNS_PSDU_STATE + 15'b000_0000_0000_0001;
                 end
-                DATA_TAIL2_STATE:
+                DATA_TAIL_STATE:
                 begin
                     is_scramble <= 1'b1;
                     scrambler_in <= 1'b0;        //  =0 Tail bit
