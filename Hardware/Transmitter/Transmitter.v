@@ -20,4 +20,17 @@ module Transmitter(Start, Input, Reset, Clock, Output);
  * @author : sadrasabouri(sabouri.sadra@gmail.com)
  *************************************************
  */
+    input wire Start;
+    input wire Input;
+    input wire Reset;
+    input wire Clock;
+
+    output wire Output;
+
+    Scrambler scrambler(
+        .Input(Input),
+        .Reset(Reset),
+        .Clock(Clock),
+        .Output(Output)
+    );
 endmodule
