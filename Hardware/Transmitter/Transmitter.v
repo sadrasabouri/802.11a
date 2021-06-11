@@ -67,11 +67,13 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     parameter [3:0] SIGNAL_RESERVERD_STATE = 3;
     //          LENGTH:
     parameter [3:0] SIGNAL_LENGTH_STATE = 4;
-    reg [4:0] TURNS_LENGTH_STATE;
+    reg [3:0] TURNS_LENGTH_STATE;
     parameter [0:11] LENGTH = 12'h10;        // =16  [Octet Numbers of Data (Big Endian)]
     //          PARITY:
     parameter [3:0] SIGNAL_PARITY_STATE = 5;
-
+    //          TAIL:
+    parameter [3:0] SIGNAL_TAIL_STATE = 6;
+    reg [2:0] TURNS_TAIL_STATE;
 
     //  Wifi-Frame FSM - Graph:
     always @(posedge Clock, posedge Reset)
@@ -84,6 +86,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             TURNS_PLCP_PREAMBLE <= 8'h00;
             TURNS_RATE_STATE <= 2'b00;
             TURNS_LENGTH_STATE <= 4'h0;
+            TURNS_TAIL_STATE <= 3'b000;
         end
         else if (Start) //  Start State
         begin
@@ -149,11 +152,25 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     //  Calculate even parity of 0-16 bits
                     transmitter_out <= ^{ {RATE},   //  4  bits Data Rate
                                           {1'b0},   //  1  bit Reserved
-                                          {LENGTH} //  12 bits Data LENGTH
+                                          {LENGTH}  //  12 bits Data LENGTH
                                         };
 
                     //  Reached to the end of Parity sub-frame
                     CURRENT_STATE <= SIGNAL_TAIL_STATE;
+                end
+                SIGNAL_TAIL_STATE:
+                begin
+                    is_scramble <= 1'b0;
+                    transmitter_out <= 1'b0;        //  =0 Tail bit
+
+                    //  Reached to the end of tail sub-frame
+                    if (TURNS_TAIL_STATE >= 6)
+                    begin
+                        CURRENT_STATE <= SIGNAL_SERVICE_STATE;
+                        TURNS_TAIL_STATE <= 3'b000;
+                    end
+                    else
+                        TURNS_TAIL_STATE <= TURNS_TAIL_STATE + 3'b001;
                 end
                 default:
                 begin
@@ -163,6 +180,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     TURNS_PLCP_PREAMBLE <= 8'h00;
                     TURNS_RATE_STATE <= 2'b00;
                     TURNS_LENGTH_STATE <= 4'h0;
+                    TURNS_TAIL_STATE <= 3'b000;
                 end
             endcase
         end
