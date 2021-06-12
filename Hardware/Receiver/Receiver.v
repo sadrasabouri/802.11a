@@ -106,7 +106,27 @@ module Receiver(Input, Reset, Clock, Output);
                 begin
                     if (Input_buffer == PREAMBLE_SYMBOLS)
                         CURRENT_STATE <= SIGNAL_RATE_STATE;
-                end 
+                end
+                //  ------------------------------------
+                //  PLCP_PREAMBLE::END     SIGNAL::START
+                //  ------------------------------------
+                SIGNAL_RATE_STATE:
+                begin
+                    RATE[TURNS_RATE_STATE] <= Input;
+
+                    //  Reached to the end of Rate sub-frame
+                    if (TURNS_RATE_STATE == 2'b11)
+                    begin
+                        CURRENT_STATE <= SIGNAL_RESERVERD_STATE;
+                        TURNS_RATE_STATE <= 2'b00;
+                    end
+                    else
+                        TURNS_RATE_STATE <= TURNS_RATE_STATE + 2'b01;
+                end
+                SIGNAL_RESERVERD_STATE:
+                begin
+                    CURRENT_STATE <= SIGNAL_LENGTH_STATE;
+                end
                 default:
                 begin
                     if (Input_buffer == PREAMBLE_SYMBOLS)
