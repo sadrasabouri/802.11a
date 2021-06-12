@@ -209,6 +209,28 @@ module Receiver(Input, Reset, Clock, Output, Error);
                     else
                         TURNS_SERVICE_STATE <= TURNS_SERVICE_STATE + 4'b0001;
                 end
+                DATA_PSDU_STATE:
+                begin
+                    //  Reached to the end of psdu sub-frame (LENGHT bytes = LENGHT << 3 bits)
+                    if (TURNS_PSDU_STATE + 15'b000_0000_0000_0001 >= {{LENGTH}, {3'b000}})
+                    begin
+                        CURRENT_STATE <= DATA_TAIL_STATE;
+                        TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
+                    end
+                    else
+                        TURNS_PSDU_STATE <= TURNS_PSDU_STATE + 15'b000_0000_0000_0001;
+                end
+                DATA_TAIL_STATE:
+                begin
+                    //  Reached to the end of tail sub-frame
+                    if (TURNS_TAIL_STATE >= 6)
+                    begin
+                        CURRENT_STATE <= IDLE_STATE;
+                        TURNS_TAIL_STATE <= 3'b000;
+                    end
+                    else
+                        TURNS_TAIL_STATE <= TURNS_TAIL_STATE + 3'b001;
+                end
                 default:
                 begin
                     descrambler_reset = 1'b0;
