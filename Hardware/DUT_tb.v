@@ -18,6 +18,7 @@ module DUT_tb;
 	// Outputs
 	wire Output;
     wire Antenna;
+    wire Error;
 
 	DUT dut (
         .Start(Start),
@@ -25,7 +26,8 @@ module DUT_tb;
 		.Clock(Clock),
 		.Reset(Reset),
         .Antenna(Antenna),
-		.Output(Output)
+		.Output(Output),
+        .Error(Error)
     );
 	
     localparam CLK_PERIOD = 0.5;
@@ -43,12 +45,52 @@ module DUT_tb;
 			" Reset=%b", Reset,
 			" Input=%b", Input,
 			" --- >",
-            "Antenna:%b |", Antenna,
-			" Output:%b", Output);
+            " | Antenna:%b |", Antenna,
+			" Output:%b - ", Output);
     end
 
     integer i = 0;
     integer N_PASS = 0;
+    integer j = 0;
+    reg [0:3] DATA_INPUT = 4'b1001;
+
+    //  Sending and Receiving Data
+    initial
+    begin
+		#10
+        #1;
+        
+        #137;
+        $display("[DATA_INPUT::START]");
+        for (j = 0; j < 4; j = j + 1)
+        begin
+            Input = DATA_INPUT[j];
+            #1;
+        end
+        Input = 0;
+        $display("[DATA_INPUT::END]");
+        
+        #4;
+        $display("[DATA_OUTPUT::START]");
+        for (j = 0; j < 4; j = j + 1)
+        begin
+            if (Output == DATA_INPUT[j])
+            begin
+                $display("[OK] (", j, "/", 4, ")");
+                N_PASS = N_PASS + 1;  
+            end
+            else
+                $display("[FAILED] (", j, "/", 4, ") Expected:%b  |  Got:%b", DATA_INPUT[j], Output);
+            #1;
+        end
+
+        if (N_PASS == 4)
+            $display("ALL TEST PASSED. :)");
+        else
+            $display(4 - N_PASS, " test(s) failed. :(");
+
+        $display("[DATA_OUTPUT::END]");
+    end
 
     initial
     begin
@@ -63,22 +105,9 @@ module DUT_tb;
         Reset = 1;
         #1;
         Reset = 0;
-
-        for (i = 1; i <= 127; i = i + 1)
-        begin
-            if (Output == 1'b0)
-            begin
-                $display("[OK] (", i, "/", 127, ")");
-                N_PASS = N_PASS + 1;  
-            end
-            else
-                $display("[FAILED] (", i, "/", 127, ") Expected:%b  |  Got:%b", 1'b0, Output);
-            #1;
-        end
-
-        if (N_PASS == 127)
-            $display("ALL TEST PASSED. :)");
-        else
-            $display(127 - N_PASS, " test(s) failed. :(");
+        Start = 1;
+        #1;
+        Start = 0;
+        #1;
     end
 endmodule

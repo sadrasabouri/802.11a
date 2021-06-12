@@ -1,266 +1,210 @@
 # [START]
-#                    1ns | Reset=0 Input=0 --- >Antenna:x | Output:x
-#                    2ns | Reset=0 Input=0 --- >Antenna:x | Output:x
-#                    3ns | Reset=0 Input=0 --- >Antenna:x | Output:x
-#                    4ns | Reset=0 Input=0 --- >Antenna:x | Output:x
-#                    5ns | Reset=0 Input=0 --- >Antenna:x | Output:x
-#                    6ns | Reset=0 Input=0 --- >Antenna:x | Output:x
-#                    7ns | Reset=0 Input=0 --- >Antenna:x | Output:x
-#                    8ns | Reset=0 Input=0 --- >Antenna:x | Output:x
-#                    9ns | Reset=0 Input=0 --- >Antenna:x | Output:x
-#                   10ns | Reset=1 Input=0 --- >Antenna:x | Output:x
-# [OK] (          1/        127)
-#                   11ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (          2/        127)
-#                   12ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (          3/        127)
-#                   13ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (          4/        127)
-#                   14ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (          5/        127)
-#                   15ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (          6/        127)
-#                   16ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (          7/        127)
-#                   17ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (          8/        127)
-#                   18ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (          9/        127)
-#                   19ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         10/        127)
-#                   20ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         11/        127)
-#                   21ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         12/        127)
-#                   22ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         13/        127)
-#                   23ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         14/        127)
-#                   24ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         15/        127)
-#                   25ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         16/        127)
-#                   26ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         17/        127)
-#                   27ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         18/        127)
-#                   28ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         19/        127)
-#                   29ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         20/        127)
-#                   30ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         21/        127)
-#                   31ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         22/        127)
-#                   32ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         23/        127)
-#                   33ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         24/        127)
-#                   34ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         25/        127)
-#                   35ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         26/        127)
-#                   36ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         27/        127)
-#                   37ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         28/        127)
-#                   38ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         29/        127)
-#                   39ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         30/        127)
-#                   40ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         31/        127)
-#                   41ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         32/        127)
-#                   42ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         33/        127)
-#                   43ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         34/        127)
-#                   44ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         35/        127)
-#                   45ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         36/        127)
-#                   46ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         37/        127)
-#                   47ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         38/        127)
-#                   48ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         39/        127)
-#                   49ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         40/        127)
-#                   50ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         41/        127)
-#                   51ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         42/        127)
-#                   52ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         43/        127)
-#                   53ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         44/        127)
-#                   54ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         45/        127)
-#                   55ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         46/        127)
-#                   56ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         47/        127)
-#                   57ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         48/        127)
-#                   58ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         49/        127)
-#                   59ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         50/        127)
-#                   60ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         51/        127)
-#                   61ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         52/        127)
-#                   62ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         53/        127)
-#                   63ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         54/        127)
-#                   64ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         55/        127)
-#                   65ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         56/        127)
-#                   66ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         57/        127)
-#                   67ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         58/        127)
-#                   68ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         59/        127)
-#                   69ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         60/        127)
-#                   70ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         61/        127)
-#                   71ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         62/        127)
-#                   72ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         63/        127)
-#                   73ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         64/        127)
-#                   74ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         65/        127)
-#                   75ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         66/        127)
-#                   76ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         67/        127)
-#                   77ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         68/        127)
-#                   78ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         69/        127)
-#                   79ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         70/        127)
-#                   80ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         71/        127)
-#                   81ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         72/        127)
-#                   82ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         73/        127)
-#                   83ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         74/        127)
-#                   84ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         75/        127)
-#                   85ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         76/        127)
-#                   86ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         77/        127)
-#                   87ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         78/        127)
-#                   88ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         79/        127)
-#                   89ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         80/        127)
-#                   90ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         81/        127)
-#                   91ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         82/        127)
-#                   92ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         83/        127)
-#                   93ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         84/        127)
-#                   94ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         85/        127)
-#                   95ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         86/        127)
-#                   96ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         87/        127)
-#                   97ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         88/        127)
-#                   98ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         89/        127)
-#                   99ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         90/        127)
-#                  100ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         91/        127)
-#                  101ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         92/        127)
-#                  102ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         93/        127)
-#                  103ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         94/        127)
-#                  104ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         95/        127)
-#                  105ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         96/        127)
-#                  106ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (         97/        127)
-#                  107ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         98/        127)
-#                  108ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (         99/        127)
-#                  109ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        100/        127)
-#                  110ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        101/        127)
-#                  111ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        102/        127)
-#                  112ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        103/        127)
-#                  113ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        104/        127)
-#                  114ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        105/        127)
-#                  115ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        106/        127)
-#                  116ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        107/        127)
-#                  117ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        108/        127)
-#                  118ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        109/        127)
-#                  119ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        110/        127)
-#                  120ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        111/        127)
-#                  121ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        112/        127)
-#                  122ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        113/        127)
-#                  123ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        114/        127)
-#                  124ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        115/        127)
-#                  125ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        116/        127)
-#                  126ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        117/        127)
-#                  127ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        118/        127)
-#                  128ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        119/        127)
-#                  129ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        120/        127)
-#                  130ns | Reset=0 Input=0 --- >Antenna:0 | Output:0
-# [OK] (        121/        127)
-#                  131ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        122/        127)
-#                  132ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        123/        127)
-#                  133ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        124/        127)
-#                  134ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        125/        127)
-#                  135ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        126/        127)
-#                  136ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
-# [OK] (        127/        127)
-#                  137ns | Reset=0 Input=0 --- >Antenna:1 | Output:0
+#                    1ns | Reset=0 Input=0 --- > | Antenna:0 | Output:x - 
+#                    2ns | Reset=0 Input=0 --- > | Antenna:0 | Output:x - 
+#                    3ns | Reset=0 Input=0 --- > | Antenna:0 | Output:x - 
+#                    4ns | Reset=0 Input=0 --- > | Antenna:0 | Output:x - 
+#                    5ns | Reset=0 Input=0 --- > | Antenna:0 | Output:x - 
+#                    6ns | Reset=0 Input=0 --- > | Antenna:0 | Output:x - 
+#                    7ns | Reset=0 Input=0 --- > | Antenna:0 | Output:x - 
+#                    8ns | Reset=0 Input=0 --- > | Antenna:0 | Output:x - 
+#                    9ns | Reset=0 Input=0 --- > | Antenna:0 | Output:x - 
+#                   10ns | Reset=1 Input=0 --- > | Antenna:0 | Output:x - 
+#                   11ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   12ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   13ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                   14ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   15ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                   16ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   17ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                   18ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   19ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                   20ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   21ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   22ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   23ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   24ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   25ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   26ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   27ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   28ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   29ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   30ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   31ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   32ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   33ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   34ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   35ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   36ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   37ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   38ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   39ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   40ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   41ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   42ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   43ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   44ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   45ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   46ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   47ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   48ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   49ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   50ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   51ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   52ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   53ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   54ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   55ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   56ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   57ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   58ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   59ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   60ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   61ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   62ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   63ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   64ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   65ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   66ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   67ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   68ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   69ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   70ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   71ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   72ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   73ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   74ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   75ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   76ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   77ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   78ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   79ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   80ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   81ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   82ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   83ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   84ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   85ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   86ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   87ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   88ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   89ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   90ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   91ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   92ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   93ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   94ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   95ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   96ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   97ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                   98ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                   99ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  100ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  101ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  102ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  103ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  104ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  105ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  106ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  107ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  108ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  109ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  110ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  111ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  112ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  113ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  114ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  115ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  116ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  117ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  118ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  119ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  120ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  121ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  122ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  123ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  124ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  125ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  126ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  127ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  128ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  129ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  130ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  131ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  132ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  133ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  134ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  135ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  136ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  137ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  138ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  139ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  140ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  141ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  142ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  143ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  144ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  145ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  146ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  147ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+# [DATA_INPUT::START]
+#                  148ns | Reset=0 Input=1 --- > | Antenna:0 | Output:1 - 
+#                  149ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  150ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  151ns | Reset=0 Input=1 --- > | Antenna:0 | Output:0 - 
+# [DATA_INPUT::END]
+#                  152ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  153ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  154ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  155ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+# [DATA_OUTPUT::START]
+# [OK] (          0/          4)
+#                  156ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+# [OK] (          1/          4)
+#                  157ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+# [OK] (          2/          4)
+#                  158ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+# [OK] (          3/          4)
+#                  159ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
 # ALL TEST PASSED. :)
+# [DATA_OUTPUT::END]
+#                  160ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  161ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  162ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  163ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  164ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  165ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  166ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  167ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  168ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  169ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  170ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  171ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  172ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  173ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  174ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  175ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  176ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  177ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  178ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  179ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  180ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  181ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  182ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  183ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  184ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  185ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  186ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  187ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  188ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  189ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  190ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  191ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  192ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  193ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  194ns | Reset=0 Input=0 --- > | Antenna:1 | Output:1 - 
+#                  195ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  196ns | Reset=0 Input=0 --- > | Antenna:0 | Output:1 - 
+#                  197ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  198ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 - 
+#                  199ns | Reset=0 Input=0 --- > | Antenna:0 | Output:0 - 
+#                  200ns | Reset=0 Input=0 --- > | Antenna:1 | Output:0 -
