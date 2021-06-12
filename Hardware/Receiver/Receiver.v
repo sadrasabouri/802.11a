@@ -154,6 +154,20 @@ module Receiver(Input, Reset, Clock, Output, Error);
                     //  Reached to the end of Parity sub-frame
                     CURRENT_STATE <= SIGNAL_TAIL_STATE;
                 end
+                SIGNAL_TAIL_STATE:
+                begin
+                    //  Reached to the end of tail sub-frame
+                    if (TURNS_TAIL_STATE >= 5)      //  6 - 1
+                    begin
+                        CURRENT_STATE <= DATA_SERVICE_STATE;
+                        TURNS_TAIL_STATE <= 3'b000;
+                    end
+                    else
+                        TURNS_TAIL_STATE <= TURNS_TAIL_STATE + 3'b001;
+                end
+                //  ------------------------------------
+                //  SIGNAL::END             DATA::START
+                //  ------------------------------------
                 default:
                 begin
                     if (Input_buffer == PREAMBLE_SYMBOLS)
