@@ -1,4 +1,4 @@
-function Output = DeScrambler(Input)
+function Output = DeScrambler(Input, Init)
 % /*
 %  * `DeScrambler` Matlab function
 %  *
@@ -8,6 +8,7 @@ function Output = DeScrambler(Input)
 %  * 
 %  * parameters:
 %  * Input    [n]: Input data array 
+%  * Init     [7]: Inital state of descrambler
 %  * Output   [n]: Output descrambled data array
 %  *
 %  * [TEST_INPUT]:  [0, 0, 0, 0, 1, 1, 1, 0,
@@ -34,7 +35,7 @@ function Output = DeScrambler(Input)
     
     Output = zeros(size(Input));
 
-    string = [1, 1, 1, 1, 1, 1, 1];         %   Initial State
+    string = Init;         %   Initial State
     
     for i=1:size(Input, 2)
         S_x = xor(string(7), string(4));    %   S(x) = x ^ 7 + x ^ 4 + 1
