@@ -30,7 +30,11 @@ Input Data --> | Scrambler +------> to Antenna
 ```
 
 ### [Receiver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver)
-[Receiver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/Receiver.v) part contains receiver part of the protocol which simply breaks into 3 part:
+[Receiver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/Receiver.v) part contains 
+
+Receiver is waiting for the preamble set to start the process and it pushes it into a FIFO que named `Input_buffer` and then wait for `152` clocks and then start to pick up `LENGTH * 8` bits of input.
+
+receiver part of the protocol which simply breaks into 3 part:
 
 1. [DeScrambler](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/DeScrambler)
 
