@@ -1,7 +1,7 @@
 `include "Transmitter/Transmitter.v"
 `include "Receiver/Receiver.v"
 
-module DUT(Start, Input, Reset, Clock, Antenna, Output);
+module DUT(Start, Input, Reset, Clock, Antenna, Output, Error);
 /*
  * Module `DUT`
  *
@@ -20,6 +20,7 @@ module DUT(Start, Input, Reset, Clock, Antenna, Output);
  * Clock    [1]: Input clock
  * Antenna  [1]: transmitter output, reciever input
  * Output   [1]: Output Wifi data frame
+ * Error    [1]: Error bit which uses for exception rasing
  *
  *************************************************
  * @author : sadrasabouri(sabouri.sadra@gmail.com)
@@ -32,6 +33,7 @@ module DUT(Start, Input, Reset, Clock, Antenna, Output);
 
     output wire Antenna;
     output wire Output;
+    output wire Error;
 
     Transmitter transmitter(
         .Start(Start),
@@ -45,6 +47,7 @@ module DUT(Start, Input, Reset, Clock, Antenna, Output);
         .Input(Antenna),
         .Reset(Reset),
         .Clock(Clock),
-        .Output(Output)
+        .Output(Output),
+        .Error(Error)
     );
 endmodule
