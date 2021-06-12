@@ -27,17 +27,6 @@ module Receiver(Input, Reset, Clock, Output, Error);
     output wire Output;
     output reg Error;
 
-    //  DeScrambler Instatiation:
-    reg descrambler_in;
-    reg descrambler_reset;
-    reg [7:1] descrambler_init;
-    DeScrambler descrambler(
-        .Input(descrambler_in),
-        .Reset(descrambler_reset),
-        .Init(descrambler_init),
-        .Clock(Clock),
-        .Output(Output)
-    );
 
     parameter MAX_TURNS_PLCP_PREAMBLE = 95; //  = 12 * 8 - 1 (12 Symbols, each symbol's a byte)
     
@@ -47,6 +36,41 @@ module Receiver(Input, Reset, Clock, Output, Error);
             Input_buffer <= 95'b0;
         else
             Input_buffer <= {{Input_buffer[1:MAX_TURNS_PLCP_PREAMBLE]}, {Input}};
+
+
+    //  DeScrambler Instatiation:
+    reg descrambler_reset;
+    reg [7:1] descrambler_init;
+    DeScrambler descrambler(
+        .Input(Input_buffer[88]),           //  Which is used to descramble given data
+        .Reset(descrambler_reset),
+        .Init(descrambler_init),
+        .Clock(Clock),
+        .Output(Output)
+    );
+
+
+    always @(posedge Clock, posedge Reset)  //  Scrambler routine
+    begin
+        if (Reset)
+        begin
+            descrambler_init <= 7'b0000000;
+        end
+        else
+        begin
+            descrambler_init[1] <= Input_buffer[91] ^ Input_buffer[95];     //  X[1] = D[2] ^ D[6]
+            descrambler_init[2] <= Input_buffer[90] ^ Input_buffer[94];     //  X[2] = D[1] ^ D[5]
+            descrambler_init[3] <= Input_buffer[89] ^ Input_buffer[93];     //  X[3] = D[0] ^ D[4]
+            descrambler_init[4] <= Input_buffer[91] ^ Input_buffer[92] ^    //  X[4] = D[2] ^ D[3] ^
+                                   Input_buffer[95];                        //         D[6]
+            descrambler_init[5] <= Input_buffer[90] ^ Input_buffer[91] ^    //  X[5] = D[1] ^ D[2] ^
+                                   Input_buffer[94];                        //         D[5]
+            descrambler_init[6] <= Input_buffer[90] ^ Input_buffer[89] ^    //  X[6] = D[1] ^ D[0] ^
+                                   Input_buffer[93];                        //         D[4]
+            descrambler_init[7] <= Input_buffer[89] ^ Input_buffer[91] ^    //  X[7] = D[0] ^ D[2] ^
+                                   Input_buffer[92] ^ Input_buffer[95];     //         D[3] ^ D[6]
+        end
+    end
 
 
     //  Wifi-Frame - Parameters:
@@ -90,8 +114,7 @@ module Receiver(Input, Reset, Clock, Output, Error);
     begin
         if (Reset)
         begin
-            descrambler_in <= 1'b0;
-            descrambler_init <= 7'b0000000;
+            descrambler_reset = 1'b1;
             CURRENT_STATE <= IDLE_STATE;
             TURNS_RATE_STATE <= 2'b00;
             RATE <= 4'b1101;                // =6
@@ -107,6 +130,7 @@ module Receiver(Input, Reset, Clock, Output, Error);
             case (CURRENT_STATE)
                 IDLE_STATE:
                 begin
+                    descrambler_reset = 1'b0;
                     if (Input_buffer == PREAMBLE_SYMBOLS)
                         CURRENT_STATE <= SIGNAL_RATE_STATE;
                 end
@@ -168,8 +192,26 @@ module Receiver(Input, Reset, Clock, Output, Error);
                 //  ------------------------------------
                 //  SIGNAL::END             DATA::START
                 //  ------------------------------------
+                DATA_SERVICE_STATE:
+                begin
+                    //  Reseting DeScrambler when initial values are aready
+                    if (TURNS_SERVICE_STATE == 6)
+                        descrambler_reset <= 1'b1;
+                    if (TURNS_SERVICE_STATE == 7)
+                        descrambler_reset <= 1'b0;
+
+                    //  Reached to the end of service sub-frame
+                    if (TURNS_SERVICE_STATE >= 15)
+                    begin
+                        CURRENT_STATE <= DATA_PSDU_STATE;
+                        TURNS_SERVICE_STATE <= 4'b0000;
+                    end
+                    else
+                        TURNS_SERVICE_STATE <= TURNS_SERVICE_STATE + 4'b0001;
+                end
                 default:
                 begin
+                    descrambler_reset = 1'b0;
                     if (Input_buffer == PREAMBLE_SYMBOLS)
                         CURRENT_STATE <= SIGNAL_RATE_STATE;
                 end 
