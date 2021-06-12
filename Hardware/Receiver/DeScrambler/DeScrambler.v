@@ -1,4 +1,4 @@
-module DeScrambler(Input, Reset, Clock, Output);
+module DeScrambler(Input, Reset, Init, Clock, Output);
 /*
  * Module `DeScrambler`
  *
@@ -9,6 +9,7 @@ module DeScrambler(Input, Reset, Clock, Output);
  * parameters:
  * Input    [1]: Input data stream
  * Reset    [1]: Active high asynchronous reset
+ * Init     [1]: Initial state of descrambler
  * Clock    [1]: Input clock
  * Output   [1]: Output descrambled data stream
  *
@@ -18,10 +19,10 @@ module DeScrambler(Input, Reset, Clock, Output);
  */
     input wire Input;
     input wire Reset;
+    input wire [7:1] Init; 
     input wire Clock;
-    output wire Output;
 
-    parameter INITIAL_STATE = 7'b1111111;
+    output wire Output;
 
     reg [7:1] string;
     wire S_x;
@@ -33,7 +34,7 @@ module DeScrambler(Input, Reset, Clock, Output);
     always @(posedge Clock, posedge Reset)
     begin
         if (Reset)
-            string <= INITIAL_STATE;
+            string <= Init;
         else
         begin
             string[7:5] <= string[6:4];

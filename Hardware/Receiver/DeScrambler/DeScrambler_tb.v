@@ -14,6 +14,7 @@ module DeScrambler_tb;
 	// Inputs
 	reg Clock;
 	reg Reset;
+    reg [7:1] Init;
     reg Input;
 
 	// Outputs
@@ -24,6 +25,7 @@ module DeScrambler_tb;
 		.Input(Input),
 		.Clock(Clock),
 		.Reset(Reset),
+        .Init(Init),
 		.Output(Output)
     );
 	
@@ -40,6 +42,7 @@ module DeScrambler_tb;
         #1;
 		$display($time, "ns |",
 			" Reset=%b", Reset,
+            " Init=%b", Init,
 			" Input=%b", Input,
 			" --- >",
 			" Output:%b", Output);
@@ -55,6 +58,7 @@ module DeScrambler_tb;
 		$display("[START]");
 		Clock = 0;
 		Reset = 0;
+        Init = 7'b1111111;
         Input = SEQ_IN[1];
         #10
 
