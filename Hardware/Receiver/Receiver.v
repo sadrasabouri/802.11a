@@ -1,6 +1,6 @@
 `include "DeScrambler/DeScrambler.v"
 
-module Receiver(Input, Reset, Clock, Output);
+module Receiver(Input, Reset, Clock, Output, Error);
 /*
  * Module `Receiver`
  *
@@ -14,6 +14,7 @@ module Receiver(Input, Reset, Clock, Output);
  * Reset    [1]: Active high asynchronous reset
  * Clock    [1]: Input clock
  * Output   [1]: Output data
+ * Error    [1]: Error bit which uses for exception rasing
  *
  *************************************************
  * @author : sadrasabouri(sabouri.sadra@gmail.com)
@@ -24,6 +25,7 @@ module Receiver(Input, Reset, Clock, Output);
     input wire Clock;
 
     output wire Output;
+    output reg Error;
 
     //  DeScrambler Instatiation:
     reg descrambler_in;
@@ -98,6 +100,7 @@ module Receiver(Input, Reset, Clock, Output);
             TURNS_TAIL_STATE <= 3'b000;
             TURNS_SERVICE_STATE <= 4'b0000;
             TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
+            Error <= 1'b0;
         end
         else
         begin
@@ -126,6 +129,30 @@ module Receiver(Input, Reset, Clock, Output);
                 SIGNAL_RESERVERD_STATE:
                 begin
                     CURRENT_STATE <= SIGNAL_LENGTH_STATE;
+                end
+                SIGNAL_LENGTH_STATE:
+                begin
+                    LENGTH[TURNS_LENGTH_STATE] <= Input;  
+
+                    //  Reached to the end of lenght sub-frame
+                    if (TURNS_LENGTH_STATE >= 11)   //  12 - 1
+                    begin
+                        CURRENT_STATE <= SIGNAL_PARITY_STATE;
+                        TURNS_LENGTH_STATE <= 2'b00;
+                    end
+                    else
+                        TURNS_LENGTH_STATE <= TURNS_LENGTH_STATE + 2'b01;
+                end
+                SIGNAL_PARITY_STATE:
+                begin
+                    if(Input != ^{ {RATE},   //  4  bits Data Rate
+                                   {1'b0},   //  1  bit Reserved
+                                   {LENGTH}  //  12 bits Data LENGTH
+                                 })
+                        Error <= 1'b1;
+
+                    //  Reached to the end of Parity sub-frame
+                    CURRENT_STATE <= SIGNAL_TAIL_STATE;
                 end
                 default:
                 begin
