@@ -63,7 +63,7 @@ module Receiver_tb;
         #1;
         Reset = 0;
 
-        for (i = 2; i <= 127; i = i + 1)
+        for (i = 2; i <= 288; i = i + 1)
         begin
             Input = SEQ_IN[i];
             // if (Output == 0)
