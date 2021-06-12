@@ -13,7 +13,7 @@
 %  * @author : sadrasabouri(sabouri.sadra@gmail.com)
 %  *************************************************
 %  */
-    Input = zeros(1, 127)
+    Input = [1, 0, 0, 1]
 
     cd Transmitter;   %   Including Transmitter
     Antenna = Transmitter(Input)
@@ -23,8 +23,8 @@
     Output = Receiver(Antenna)
     cd ..;          %   Comming back to main directory
 
-    if (sum(Input == Output) == size(Input, 2))
+    if (sum(Input == Output(1:size(Input ,2))) == size(Input, 2))
         display('ALL TESTS PASSED :)')
     else
-        Input == Output
+        Input == Output(1:size(Input ,2))
     end
