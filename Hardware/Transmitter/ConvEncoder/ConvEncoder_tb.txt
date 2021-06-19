@@ -1,0 +1,44 @@
+# [START]
+#                    1ns | Reset=0 Input=1 --- > Output:x X=[1xxxxxx]
+#                    2ns | Reset=0 Input=1 --- > Output:x X=[11xxxxx]
+#                    3ns | Reset=0 Input=1 --- > Output:x X=[11xxxxx]
+#                    4ns | Reset=0 Input=1 --- > Output:x X=[111xxxx]
+#                    5ns | Reset=0 Input=1 --- > Output:x X=[111xxxx]
+#                    6ns | Reset=0 Input=1 --- > Output:x X=[1111xxx]
+#                    7ns | Reset=0 Input=1 --- > Output:x X=[1111xxx]
+#                    8ns | Reset=0 Input=1 --- > Output:x X=[11111xx]
+#                    9ns | Reset=0 Input=1 --- > Output:x X=[11111xx]
+#                   10ns | Reset=1 Input=1 --- > Output:x X=[111111x]
+# [OK] (          1/         16)
+#                   11ns | Reset=0 Input=1 --- > Output:1 X=[1000000]
+# [OK] (          2/         16)
+#                   12ns | Reset=0 Input=1 --- > Output:1 X=[1000000]
+# [OK] (          3/         16)
+#                   13ns | Reset=0 Input=1 --- > Output:1 X=[1100000]
+# [OK] (          4/         16)
+#                   14ns | Reset=0 Input=1 --- > Output:0 X=[1100000]
+# [OK] (          5/         16)
+#                   15ns | Reset=0 Input=1 --- > Output:0 X=[1110000]
+# [OK] (          6/         16)
+#                   16ns | Reset=0 Input=1 --- > Output:1 X=[1110000]
+# [OK] (          7/         16)
+#                   17ns | Reset=0 Input=1 --- > Output:1 X=[1111000]
+# [OK] (          8/         16)
+#                   18ns | Reset=0 Input=1 --- > Output:0 X=[1111000]
+# [OK] (          9/         16)
+#                   19ns | Reset=0 Input=1 --- > Output:1 X=[1111100]
+# [OK] (         10/         16)
+#                   20ns | Reset=0 Input=1 --- > Output:0 X=[1111100]
+# [OK] (         11/         16)
+#                   21ns | Reset=0 Input=1 --- > Output:0 X=[1111110]
+# [OK] (         12/         16)
+#                   22ns | Reset=0 Input=1 --- > Output:0 X=[1111110]
+# [OK] (         13/         16)
+#                   23ns | Reset=0 Input=1 --- > Output:1 X=[1111111]
+# [OK] (         14/         16)
+#                   24ns | Reset=0 Input=1 --- > Output:1 X=[1111111]
+# [OK] (         15/         16)
+#                   25ns | Reset=0 Input=1 --- > Output:1 X=[1111111]
+# [OK] (         16/         16)
+#                   26ns | Reset=0 Input=1 --- > Output:1 X=[1111111]
+# ALL TEST PASSED. :)
