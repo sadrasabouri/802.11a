@@ -20,13 +20,15 @@ This part contains transmitter part of the protocol which simply breaks into 3 p
 
 1. [Scrambler](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Scrambler)
 
+2. [ConvEncoder](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/ConvEncoder)
+
 ```
-               +-----------+
-               |           |
-Input Data --> | Scrambler +------> to Antenna
-               |           |
-               |           |
-               +-----------+
+               +-----------+      +-------------+
+               |           |      |             |
+Input Data --> | Scrambler + ---> | ConvEncoder | ------> to Antenna
+               |           |      |             |
+               |           |      |             |
+               +-----------+      +-------------+
 ```
 
 ### [Receiver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver)
