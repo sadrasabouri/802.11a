@@ -7,6 +7,32 @@ The bit denoted as “A” shall be output from the encoder before the bit denot
 
 <img src="https://github.com/sadrasabouri/802.11a/blob/master/OtherFiles/ConvEncoder.PNG">
 
+As we mentioned about generator polynomials, after defining a que structure for input buffer like bellow:
+
+```
+           _____________________________
+           |   |   |   |   |   |   |   |  
+Input ---> | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 
+           |   |   |   |   |   |   |   |
+           _____________________________
+
+```
+
+Then we have:
+
+```
+g0 = (1011011)_2  ---> g_0(x) = x^1 + x^3 + x^4 + x^6 + x^7
+g1 = (1111001)_2  ---> g_1(x) = x^1 + x^2 + x^3 + x^4 + x^7
+```
+
+so output is a sequence (y) which is defined like bellow:
+
+```
+       {    k % 2 == 0  :   x[1] + x[3] + x[4] + x[6] + x[7]
+y[k] = {
+       {    k % 2 == 1  :   x[1] + x[2] + x[3] + x[4] + x[7]
+``` 
+
 This directory contains different files:
 
 ## [ConvEncoder.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/ConvEncoder/ConvEncoder.v)
