@@ -1,4 +1,4 @@
-module ConvEncoder(Input, Reset, Clock, Output);
+module ConvEncoder(Input, Reset, Clock, Output, x);
 /*
  * Module `ConvEncoder`
  *
@@ -22,10 +22,10 @@ module ConvEncoder(Input, Reset, Clock, Output);
     input wire Clock;
     output wire Output;
 
-    parameter INITIAL_STATE = 7'b0000000;
+    parameter INITIAL_STATE = 6'b000000;
 
-    reg [1:7] x;
-    reg is_even;
+    output reg [1:6] x;
+    reg is_odd;
 
     //  Buffer Update
     always @(posedge Clock, posedge Reset)
@@ -33,22 +33,22 @@ module ConvEncoder(Input, Reset, Clock, Output);
         if (Reset)
         begin
            x <= INITIAL_STATE;
-           is_even <= 1'b0; 
+           is_odd <= 1'b0; 
         end
         else
         begin
-            if (is_even)
+            if (is_odd)
             begin
-                x <= {{Input}, {x[1:6]}}; 
-                is_even <= 1'b0;
+                x <= {{Input}, {x[1:5]}}; 
+                is_odd <= 1'b0; 
             end
             else
-                is_even <= 1'b1;
+                is_odd <= 1'b1;
         end
     end
 
     //  Coding
-    assign Output = is_even ?
-                    x[1] ^ x[3] ^ x[4] ^ x[6] ^ x[7] :
-                    x[1] ^ x[2] ^ x[3] ^ x[4] ^ x[7] ;
+    assign Output = is_odd ?
+                    Input ^ x[1] ^ x[2] ^ x[3] ^ x[6] :
+                    Input ^ x[2] ^ x[3] ^ x[5] ^ x[6] ;
 endmodule
