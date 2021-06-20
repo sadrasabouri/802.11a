@@ -7,6 +7,10 @@ Receiver is waiting for the preamble set to start the process and it pushes it i
 
 <img src="https://github.com/sadrasabouri/802.11a/blob/master/OtherFiles/Scrambler.PNG">
 
+2. [ViterbiDecoder](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/ViterbiDecoder)
+
+As Document issued decoding the received sequence by the Viterbi algorithm is recommended. 
+
 ```
                 +--------------+ 
                 |              |
