@@ -22,9 +22,9 @@ module ConvEncoder(Input, Reset, Clock, Output);
     input wire Clock;
     output wire Output;
 
-    parameter INITIAL_STATE = 6'b000000;
+    parameter INITIAL_STATE = 7'b0000000;
 
-    reg [1:6] x;
+    reg [1:7] x;
     reg is_odd;
 
     //  Buffer Update
@@ -38,17 +38,17 @@ module ConvEncoder(Input, Reset, Clock, Output);
         else
         begin
             if (is_odd)
-            begin
-                x <= {{Input}, {x[1:5]}}; 
-                is_odd <= 1'b0; 
-            end
+                is_odd <= 1'b0;
             else
-                is_odd <= 1'b1;
+            begin
+                x <= {{Input}, {x[1:6]}};
+                is_odd <= 1'b1; 
+            end
         end
     end
 
     //  Coding
     assign Output = is_odd ?
-                    Input ^ x[1] ^ x[2] ^ x[3] ^ x[6] :
-                    Input ^ x[2] ^ x[3] ^ x[5] ^ x[6] ;
+                    x[1] ^ x[3] ^ x[4] ^ x[6] ^ x[7] :
+                    x[1] ^ x[2] ^ x[3] ^ x[4] ^ x[7] ;
 endmodule
