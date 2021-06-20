@@ -1,6 +1,7 @@
 `include "Scrambler/Scrambler.v"
+`include "ConvEncoder/ConvEncoder.v"
 
-module Transmitter(Start, Input, Reset, Clock, Output);
+module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
 /*
  * Module `Transmitter`
  *
@@ -14,6 +15,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
  * Input    [1]: Input data stream
  * Reset    [1]: Active high asynchronous reset
  * Clock    [1]: Input clock
+ * Clock2   [1]: Input clock2 (2*Main Clock)
  * Output   [1]: Output Wifi data frame
  *
  *************************************************
@@ -24,10 +26,12 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     input wire Input;
     input wire Reset;
     input wire Clock;
+    input wire Clock2;
 
-    output reg Output;
+    output wire Output;
     reg transmitter_out;
     reg is_scramble;
+    reg is_coded;
 
     //  Scrambler Instatiation:
     wire scrambler_out;
@@ -39,12 +43,6 @@ module Transmitter(Start, Input, Reset, Clock, Output);
         .Clock(Clock),
         .Output(scrambler_out)
     );
-
-
-    //  Output MUX:
-    always @(scrambler_out, transmitter_out, is_scramble)
-        Output <= is_scramble ? scrambler_out : transmitter_out;
-
 
     //  Wifi-Frame - Parameters:
     //      Current state register:
@@ -90,6 +88,24 @@ module Transmitter(Start, Input, Reset, Clock, Output);
     reg [7:0] TURNS_PADBITS_STATE;
 
 
+    //  ConvEncoder Instatiation:
+    wire encoder_out;
+    reg encoder_reset;
+    wire encoder_in;
+    //      If we were in DATA frame scrambler out should be coded else transmitter out
+    assign encoder_in = (CURRENT_STATE >= DATA_SERVICE_STATE) ? scrambler_out : transmitter_out;
+    ConvEncoder convencoder(
+        .Input(encoder_in),
+        .Reset(encoder_reset),
+        .Clock(Clock2),
+        .Output(encoder_out)
+    );
+
+
+    //  Output MUX:
+    assign Output = is_coded ? encoder_out : transmitter_out;
+
+
     //  Wifi-Frame FSM - Graph:
     always @(posedge Clock, posedge Reset)
     begin
@@ -99,6 +115,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
             scrambler_in <= 1'b0;
             transmitter_out <= 1'b0;
             is_scramble <= 1'b0;
+            is_coded <= 1'b0;
             CURRENT_STATE <= IDLE_STATE; 
             TURNS_PLCP_PREAMBLE <= 8'h00;
             TURNS_RATE_STATE <= 2'b00;
@@ -113,6 +130,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
         begin
             CURRENT_STATE <= PLCP_PREAMBLE_STATE;
             is_scramble <= 1'b0;
+            is_coded <= 1'b0;
             transmitter_out <= 1'b0;
             scrambler_reset <= 1'b0;
             DPBS_REMAINDER <= 8'h00;
@@ -133,6 +151,8 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     begin
                         CURRENT_STATE <= SIGNAL_RATE_STATE;
                         TURNS_PLCP_PREAMBLE <= 8'h00;
+                        encoder_reset <= 1'b1;
+                        is_coded <= 1'b1;
                     end
                     else
                         TURNS_PLCP_PREAMBLE <= TURNS_PLCP_PREAMBLE + 8'h01;
@@ -142,6 +162,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                 //  ------------------------------------
                 SIGNAL_RATE_STATE:
                 begin
+                    encoder_reset <= 1'b0;
                     is_scramble <= 1'b0;
                     transmitter_out <= RATE[TURNS_RATE_STATE];
 
@@ -292,6 +313,7 @@ module Transmitter(Start, Input, Reset, Clock, Output);
                     scrambler_reset <= 1'b0;
                     transmitter_out <= 1'b0;
                     is_scramble <= 1'b0;
+                    is_coded <= 1'b0;
                     CURRENT_STATE <= IDLE_STATE;
                     TURNS_PLCP_PREAMBLE <= 8'h00;
                     TURNS_RATE_STATE <= 2'b00;
