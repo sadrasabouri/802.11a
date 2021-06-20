@@ -1,4 +1,4 @@
-module ConvEncoder(Input, Reset, Clock, Output, x);
+module ConvEncoder(Input, Reset, Clock, Output);
 /*
  * Module `ConvEncoder`
  *
@@ -24,7 +24,7 @@ module ConvEncoder(Input, Reset, Clock, Output, x);
 
     parameter INITIAL_STATE = 6'b000000;
 
-    output reg [1:6] x;
+    reg [1:6] x;
     reg is_odd;
 
     //  Buffer Update

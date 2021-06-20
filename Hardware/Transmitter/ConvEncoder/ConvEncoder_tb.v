@@ -16,14 +16,13 @@ module ConvEncoder_tb;
 
 	// Outputs
 	wire Output;
-    wire [1:6] x;
+
 	// Instantiate the Unit Under Test (UUT)
 	ConvEncoder uut (
 		.Input(Input),
 		.Clock(Clock),
 		.Reset(Reset),
-		.Output(Output),
-        .x(x)
+		.Output(Output)
     );
 	
     localparam CLK_PERIOD = 0.5;
@@ -41,8 +40,7 @@ module ConvEncoder_tb;
 			" Reset=%b", Reset,
 			" Input=%b", Input,
 			" --- >",
-			" Output:%b", Output,
-            " X=[%b%b]", Input, x);
+			" Output:%b", Output);
     end
 
     integer i = 0;
