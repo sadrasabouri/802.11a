@@ -11,6 +11,7 @@ module Transmitter_tb;
 */
 	// Inputs
 	reg Clock;
+    reg Clock2;
 	reg Reset;
     reg Input;
     reg Start;
@@ -23,21 +24,29 @@ module Transmitter_tb;
         .Start(Start),
 		.Input(Input),
 		.Clock(Clock),
+        .Clock2(Clock2),
 		.Reset(Reset),
 		.Output(Output)
     );
 	
     localparam CLK_PERIOD = 0.5;
+    localparam CLK2_PERIOD = 0.25;
 
     always 
 	begin
 		 Clock = ~Clock;
 		 #CLK_PERIOD;
 	end
+    
+    always 
+	begin
+		 Clock2 = ~Clock2;
+		 #CLK2_PERIOD;
+	end
 
 	always
 	begin
-        #1;
+        #0.5;
 		$display($time, "ns |",
 			" Reset=%b", Reset,
 			" Input=%b", Input,
@@ -49,7 +58,7 @@ module Transmitter_tb;
     integer i = 0;
     integer j = 0;
     integer N_PASS = 0;
-    reg [1:288] DESIRED_OUT = 288'b101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010110100000000100000000000000011101111001001011001000000100010011000101110101101100000110011010100111001111011010000101010111110100101000110111000111111100001110111100101100100100000010001001100;
+    reg [1:576] DESIRED_OUT = 576'b110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100110011001100111010111001101110110000110111110010110000000000000000001110010111110011101001001011011010101011111000001011110111111111000010001111010011010111000001000101100001001001001010000000110010101100100111100010110001010100111001011011011000100000111110000111101110011010011101000001110111001101101110101000110001100110010101111100111010010001101010111110110101000010111101111111110000100011;
     reg [0:3] DATA_INPUT = 4'b1001;
 
     initial
@@ -57,6 +66,7 @@ module Transmitter_tb;
 		// Initialize Inputs
 		$display("[START]");
 		Clock = 0;
+        Clock2 = 0;
 		Reset = 0;
         Input = 0;
         Start = 0;
@@ -72,22 +82,22 @@ module Transmitter_tb;
         Start = 0;
         #1;
         
-        for (i = 1; i <= 288; i = i + 1)
+        for (i = 1; i <= 576; i = i + 1)
         begin
             if (DESIRED_OUT[i] == Output)
             begin
-                $display("[OK] (", i, "/", 288, ")");
+                $display("[OK] (", i, "/", 576, ")");
                 N_PASS = N_PASS + 1;  
             end
             else
-                $display("[FAILED] (", i, "/", 288, ") Expected:%b  |  Got:%b", DESIRED_OUT[i], Output);
-            #1;
+                $display("[FAILED] (", i, "/", 576, ") Expected:%b  |  Got:%b", DESIRED_OUT[i], Output);
+            #0.5;
         end
 
-        if (N_PASS == 288)
+        if (N_PASS == 576)
             $display("ALL TEST PASSED. :)");
         else
-            $display(288 - N_PASS, " test(s) failed. :(");
+            $display(576 - N_PASS, " test(s) failed. :(");
     end
 
     initial

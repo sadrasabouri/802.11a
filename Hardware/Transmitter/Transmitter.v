@@ -112,6 +112,7 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
         if (Reset)      //  Reset State
         begin
             scrambler_reset <= 1'b1;
+            encoder_reset <= 1'b1;
             scrambler_in <= 1'b0;
             transmitter_out <= 1'b0;
             is_scramble <= 1'b0;
@@ -133,6 +134,7 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
             is_coded <= 1'b0;
             transmitter_out <= 1'b0;
             scrambler_reset <= 1'b0;
+            encoder_reset <= 1'b0;
             DPBS_REMAINDER <= 8'h00;
         end
         else
@@ -152,7 +154,6 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
                         CURRENT_STATE <= SIGNAL_RATE_STATE;
                         TURNS_PLCP_PREAMBLE <= 8'h00;
                         encoder_reset <= 1'b1;
-                        is_coded <= 1'b1;
                     end
                     else
                         TURNS_PLCP_PREAMBLE <= TURNS_PLCP_PREAMBLE + 8'h01;
@@ -164,6 +165,7 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
                 begin
                     encoder_reset <= 1'b0;
                     is_scramble <= 1'b0;
+                    is_coded <= 1'b1;
                     transmitter_out <= RATE[TURNS_RATE_STATE];
 
                     //  Reached to the end of Rate sub-frame
@@ -311,6 +313,7 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
                 default:
                 begin
                     scrambler_reset <= 1'b0;
+                    encoder_reset <= 1'b0;
                     transmitter_out <= 1'b0;
                     is_scramble <= 1'b0;
                     is_coded <= 1'b0;
