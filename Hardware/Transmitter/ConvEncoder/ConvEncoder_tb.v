@@ -59,6 +59,7 @@ module ConvEncoder_tb;
         Reset = 1;
         #1;
         Reset = 0;
+        #1;
 
         for (i = 1; i <= 16; i = i + 1)
         begin
