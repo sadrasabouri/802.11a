@@ -27,14 +27,15 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
     reg [0:8*MAX_LENGTH-1] Path [0:63]; //  Paths wich used for traceback
 
 
-    reg [0:1] inBuff;
+    reg inBuff;
     //  Input buffer handler:
+    //      Buffer would be = {inBuff, Input} for more efficiency
     always @(posedge Clock, posedge Reset)
     begin
         if (Reset)
-            inBuff <= 2'b00;
+            inBuff <= 1'b0;
         else
-            inBuff <= {{inBuff[1]}, {Input}};
+            inBuff <= Input;
     end
 
     //  Viterbi FSM - Values:
