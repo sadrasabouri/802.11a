@@ -128,7 +128,7 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                                     begin   //  {i[4:0], 1'b0} is better path than {i[4:0], 1'b1} 
                                         Path[i][input_counter*7 +: 7] <= {1'b0, i[4:0], 1'b0};
                                         CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b0}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b0} + ^{Input, i[5], i[4], i[3], i[2], 1'b0});
-                                        $display("[INNER_TEST::0,1:1]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b0}, i[5:0], {inBuff, Input}, i[5],
+                                        $display("[INNER_TEST::0,1:0]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b0}, i[5:0], {inBuff, Input}, i[5],
                                             $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b1} + ^{Input, i[5], i[4], i[3], i[2], 1'b1}),
                                             CostsTilNow[{i[4:0], 1'b1}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b1} + ^{Input, i[5], i[4], i[3], i[2], 1'b1}));
                                     end
