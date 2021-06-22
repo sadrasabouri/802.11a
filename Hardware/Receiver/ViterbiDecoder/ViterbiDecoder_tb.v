@@ -68,10 +68,12 @@ module ViterbiDecoder_tb;
         #1;
         Reset = 0;
 
-        for (i = 1; i <= 127; i = i + 1)
+        $display("[INPUT:START]");
+        for (i = 1; i <= 384; i = i + 1)
         begin
             Input = SEQ_IN[i];
             #1;
         end
+        $display("[INPUT:END]");
     end
 endmodule
