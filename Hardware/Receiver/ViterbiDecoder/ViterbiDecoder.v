@@ -59,7 +59,7 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
             collect_buffer <= 1'b0;
             for(i = 0; i < 64; i = i + 1)   //  Costs and Path Initilizing
             begin
-                CostsTilNow[i] <= 8'b1111_1111;
+                CostsTilNow[i] <= 8'hff;
                 Path[i] <= {MAX_LENGTH{7'b1000000}};    //  Unknow state    
             end
             input_counter <= 10'b00_0000_0000;
@@ -86,14 +86,43 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                         begin
                             for(i = 0; i < 64; i = i + 1)   //  Costs and Path Initilizing
                             begin
-                                if (CostsTilNow[i] == 8'b0000_0000)   //  Is Valid path
+                                //  If there exits a path to i <just> from {i[5:1], 0}
+                                if      (Path[{i[4:0], 1'b0}][(input_counter-1)*7 +: 7] != 7'b1000000 &&
+                                         Path[{i[4:0], 1'b1}][(input_counter-1)*7 +: 7] == 7'b1000000)
                                 begin
+                                    //                               Known, frome state 
+                                    Path[i][input_counter*7 +: 7] <= {1'b0, i[4:0], 1'b0};
+                                    
                                     //  Hamming Distance Calculation:
-                                    CostsTilNow[{1'b0, i[5:1]}] <= $unsigned(^{inBuff, 1'b0, i[4], i[3], i[1], i[0]} + ^{Input, 1'b0, i[5], i[4], i[3], i[0]});
+                                    //                  Cost till now                             XOR(In(0), O(0)=(x1+x3+x4+x6+x7))   +      XOR(In(1), O(1)=(x1+x2+x3+x4+x7))
+                                    CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b0}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b0} + ^{Input, i[5], i[4], i[3], i[2], 1'b0});
+                                end
+                                //  If there exits a path to i <just> from {i[5:1], 1}
+                                else if (Path[{i[4:0], 1'b0}][(input_counter-1)*7 +: 7] == 7'b1000000 &&
+                                         Path[{i[4:0], 1'b1}][(input_counter-1)*7 +: 7] != 7'b1000000)
+                                begin
+                                    //                               Known, frome state 
+                                    Path[i][input_counter*7 +: 7] <= {1'b0, i[4:0], 1'b1};
+                                    
+                                    //  Hamming Distance Calculation:
+                                    //                  Cost till now                             XOR(In(0), O(0)=(x1+x3+x4+x6+x7))   +      XOR(In(1), O(1)=(x1+x2+x3+x4+x7))
+                                    CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b1}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b1} + ^{Input, i[5], i[4], i[3], i[2], 1'b1});
+                                end
+                                //  If there exits a path to i from both from {i[5:1], 1} and {i[5:1], 0} 
+                                else if (Path[{i[4:0], 1'b0}][(input_counter-1)*7 +: 7] != 7'b1000000 &&
+                                         Path[{i[4:0], 1'b1}][(input_counter-1)*7 +: 7] != 7'b1000000)
+                                begin
+                                    if (CostsTilNow[{i[4:0], 1'b1}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b1} + ^{Input, i[5], i[4], i[3], i[2], 1'b1}) > CostsTilNow[{i[4:0], 1'b0}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b0} + ^{Input, i[5], i[4], i[3], i[2], 1'b0}))
+                                    begin   //  {i[4:0], 1'b1} is better path than {i[4:0], 1'b0}
+                                        Path[i][input_counter*7 +: 7] <= {1'b0, i[4:0], 1'b1};
+                                        CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b1}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b1} + ^{Input, i[5], i[4], i[3], i[2], 1'b1});
+                                    end
+                                    else
+                                    begin   //  {i[4:0], 1'b0} is better path than {i[4:0], 1'b1} 
+                                        Path[i][input_counter*7 +: 7] <= {1'b0, i[4:0], 1'b0};
+                                        CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b0}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b0} + ^{Input, i[5], i[4], i[3], i[2], 1'b0});
+                                    end
 
-                                    CostsTilNow[{1'b1, i[5:1]}] <= $unsigned(^{inBuff, 1'b1, i[4], i[3], i[1], i[0]} + ^{Input, 1'b1, i[5], i[4], i[3], i[0]});
-
-                                    Output <= {inBuff, Input} == {^{1'b0, i[4], i[3], i[1], i[0]}, ^{1'b0, i[5], i[4], i[3], i[0]}} ? 0 : 1;
                                 end
                             end
                         end
