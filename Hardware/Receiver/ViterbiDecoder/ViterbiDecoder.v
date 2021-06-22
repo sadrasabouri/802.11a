@@ -166,8 +166,6 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                 begin
                     if (counter < 64)
                     begin
-                        // $display("Checking min on %d(%b).", counter[5:0], counter[5:0]);
-
                         if (CostsTilNow[counter] < min_dist)
                         begin
                             min_dist <= CostsTilNow[counter];
@@ -187,16 +185,17 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                 begin
                     if (counter < MAX_LENGTH)
                     begin
-                        output_buffer[MAX_LENGTH - counter - 1] <= Path[INDEX_MIN][(MAX_LENGTH - counter - 1)*7 + 1];     //  i[5]: last input
+                        output_buffer[MAX_LENGTH - counter - 1] <= INDEX_MIN[5];    //  i[5]: last input
                         INDEX_MIN <= Path[INDEX_MIN][(MAX_LENGTH - counter - 1)*7 + 1 +: 6];
-                        counter <= counter + 10'b00_0000_0001;
 
-                        // $display("--| O= %b", Path[INDEX_MIN][(MAX_LENGTH - counter - 1)*7 + 1]);
+                        // $display("--| STATE = %b (%b)", INDEX_MIN, INDEX_MIN[5]);
+                        counter <= counter + 10'b00_0000_0001;
                     end
                     else
                     begin
                         CURRENT_SATE <= OUT_STATE;
                         counter <= 10'b00_0000_0000;
+                        $display("Output is Ready:");
                     end
                 end
                 OUT_STATE:
