@@ -195,7 +195,8 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                     begin
                         CURRENT_SATE <= OUT_STATE;
                         counter <= 10'b00_0000_0000;
-                        $display("Output is Ready:");
+
+                        // $display("Output is Ready:");
                     end
                 end
                 OUT_STATE:

@@ -32,7 +32,6 @@ module ViterbiDecoder_tb;
 		 #CLK_PERIOD;
 	end
 
-    integer is_even = 0;
 	always
 	begin
         #1;
@@ -41,14 +40,6 @@ module ViterbiDecoder_tb;
 			" Input=%b", Input,
 			" --- >",
 			" Output:%b", Output);
-        if (is_even)
-        begin
-            $display($time, "ns | "," -------------------------------------- >",
-			" Output:%b", Output);
-            is_even = 0;
-        end
-        else
-            is_even = 1;
     end
 
 
@@ -75,5 +66,30 @@ module ViterbiDecoder_tb;
             #1;
         end
         $display("[INPUT:END]");
+    end
+
+    reg [1:192] DES_OUT = 192'b110100000000100000000000000011101111001001011001000000100010011000101110101101100000110011010100111001111011010000101010111110100101000110111000111111100001110111100101100100100000010001001100;
+
+    initial
+    begin
+		// Initialize Inputs
+        #656;
+
+        for (i = 1; i <= 192; i = i + 1)
+        begin
+            if (Output == DES_OUT[i])
+            begin
+                $display("[OK] (", i, "/", 192, ")");
+                N_PASS = N_PASS + 1;  
+            end
+            else
+                $display("[FAILED] (", i, "/", 192, ") Expected:%b  |  Got:%b", DES_OUT[i], Output);
+            #1;
+        end
+
+        if (N_PASS == 192)
+            $display("ALL TEST PASSED. :)");
+        else
+            $display(192 - N_PASS, " test(s) failed. :(");
     end
 endmodule
