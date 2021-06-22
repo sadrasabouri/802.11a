@@ -18,7 +18,7 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
     input wire Reset; 
     input wire Clock;
 
-    output wire Output;
+    output reg Output;
 
 
     //  Pre-Defines:
@@ -72,17 +72,30 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                     begin
                         if (input_counter == 10'b00_0000_0000)  //  First State
                         begin
-                            //  State 0 -> 0 | Output : 00
+                            //  State 0 -> 0  | Output : 00
                             Path[6'b000000] <= {7'b0000000, Path[6'b000000][7:MAX_LENGTH-1]};
                             CostsTilNow[6'b000000] <= $unsigned((inBuff ^ 1'b0) + (Input ^ 1'b0)); 
 
                             //  State 0 -> 32 | Output : 11
                             Path[6'b100000] <= {7'b0000000, Path[6'b100000][7:MAX_LENGTH-1]};
                             CostsTilNow[6'b100000] <= $unsigned((inBuff ^ 1'b1) + (Input ^ 1'b1));
+
+                            Output <= {inBuff, Input} == 00 ? 0 : 1;
                         end
                         else if (input_counter < MAX_LENGTH)
                         begin
-                            
+                            for(i = 0; i < 64; i = i + 1)   //  Costs and Path Initilizing
+                            begin
+                                if (CostsTilNow[i] == 8'b0000_0000)   //  Is Valid path
+                                begin
+                                    //  Hamming Distance Calculation:
+                                    CostsTilNow[{1'b0, i[5:1]}] <= $unsigned(^{inBuff, 1'b0, i[4], i[3], i[1], i[0]} + ^{Input, 1'b0, i[5], i[4], i[3], i[0]});
+
+                                    CostsTilNow[{1'b1, i[5:1]}] <= $unsigned(^{inBuff, 1'b1, i[4], i[3], i[1], i[0]} + ^{Input, 1'b1, i[5], i[4], i[3], i[0]});
+
+                                    Output <= {inBuff, Input} == {^{1'b0, i[4], i[3], i[1], i[0]}, ^{1'b0, i[5], i[4], i[3], i[0]}} ? 0 : 1;
+                                end
+                            end
                         end
                         else
                         begin
@@ -91,6 +104,9 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                         end
                         input_counter <= input_counter + 10'b00_0000_0001;
                     end
+                TRCBCK:
+                begin
+                end
                 default: 
                 begin
                     CURRENT_SATE <= BPMC;
