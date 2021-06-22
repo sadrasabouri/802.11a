@@ -79,8 +79,6 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                             //  State 0 -> 32 | Output : 11
                             Path[6'b100000] <= {7'b0000000, Path[6'b100000][7:MAX_LENGTH-1]};
                             CostsTilNow[6'b100000] <= $unsigned((inBuff ^ 1'b1) + (Input ^ 1'b1));
-
-                            Output <= {inBuff, Input} == 00 ? 0 : 1;
                         end
                         else if (input_counter < MAX_LENGTH)
                         begin
