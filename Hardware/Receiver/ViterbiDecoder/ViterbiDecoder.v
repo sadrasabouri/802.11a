@@ -79,6 +79,7 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
         begin
             case (CURRENT_SATE)
                 BPMC:
+                begin
                     if (collect_buffer)
                     begin
                         if (counter == 10'b00_0000_0000)  //  First State
@@ -90,6 +91,7 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                             //  State 0 -> 32 | Output : 11
                             Path[6'b100000] <= {7'b0000000, Path[6'b100000][7:MAX_LENGTH-1]};
                             CostsTilNow[6'b100000] <= $unsigned((inBuff ^ 1'b1) + (Input ^ 1'b1));
+                            counter <= counter + 10'b00_0000_0001;
                         end
                         else if (counter < MAX_LENGTH)
                         begin
@@ -151,29 +153,35 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                                 else    //  State is unreachable
                                     CostsTilNow[i] <= 8'hff;
                             end
+                            counter <= counter + 10'b00_0000_0001;
                         end
                         else
                         begin
                             CURRENT_SATE <= FIND_MIN;
-                            counter <= 10'b00_0000_0000;
+                            counter <= 0;
                         end
-                        counter <= counter + 10'b00_0000_0001;
                     end
+                end
                 FIND_MIN:   // Find Minimum Value of Paths
                 begin
-                    if (counter < 10'b00_0001_0000)
+                    if (counter < 64)
                     begin
+                        // $display("Checking min on %d(%b).", counter[5:0], counter[5:0]);
+
                         if (CostsTilNow[counter] < min_dist)
                         begin
                             min_dist <= CostsTilNow[counter];
                             INDEX_MIN <= counter[5:0];
+                            
+                            // $display("--> Min is currently %d in %b", CostsTilNow[counter], counter[5:0]);
                         end
+                        counter <= counter + 10'b00_0000_0001;
                     end
+                    else
                     begin
                         CURRENT_SATE <= TRCBCK;
                         counter <= 10'b00_0000_0000;
                     end
-                    counter <= counter + 10'b00_0000_0001;
                 end
                 TRCBCK:
                 begin
@@ -181,22 +189,28 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                     begin
                         output_buffer[MAX_LENGTH - counter - 1] <= Path[INDEX_MIN][(MAX_LENGTH - counter - 1)*7 + 1];     //  i[5]: last input
                         INDEX_MIN <= Path[INDEX_MIN][(MAX_LENGTH - counter - 1)*7 + 1 +: 6];
+                        counter <= counter + 10'b00_0000_0001;
+
+                        // $display("--| O= %b", Path[INDEX_MIN][(MAX_LENGTH - counter - 1)*7 + 1]);
                     end
+                    else
                     begin
                         CURRENT_SATE <= OUT_STATE;
                         counter <= 10'b00_0000_0000;
                     end
-                    counter <= counter + 10'b00_0000_0001;
                 end
                 OUT_STATE:
                 begin
                     if (counter < MAX_LENGTH)
+                    begin
                         Output <= output_buffer[counter];
+                        counter <= counter + 10'b00_0000_0001;
+                    end
+                    else
                     begin
                         CURRENT_SATE <= BPMC;
                         counter <= 10'b00_0000_0000;
                     end
-                    counter <= counter + 10'b00_0000_0001;
                 end
                 default: 
                 begin
