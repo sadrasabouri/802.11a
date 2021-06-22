@@ -86,7 +86,7 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                         begin
                             for(i = 0; i < 64; i = i + 1)   //  Costs and Path Initilizing
                             begin
-                                //  If there exits a path to i <just> from {i[5:1], 0}
+                                //  If there exits a path to i <just> from {i[4:0], 0}
                                 if      (Path[{i[4:0], 1'b0}][(input_counter-1)*7 +: 7] != 7'b1000000 &&
                                          Path[{i[4:0], 1'b1}][(input_counter-1)*7 +: 7] == 7'b1000000)
                                 begin
@@ -97,7 +97,7 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                                     //                  Cost till now                             XOR(In(0), O(0)=(x1+x3+x4+x6+x7))   +      XOR(In(1), O(1)=(x1+x2+x3+x4+x7))
                                     CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b0}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b0} + ^{Input, i[5], i[4], i[3], i[2], 1'b0});
                                 end
-                                //  If there exits a path to i <just> from {i[5:1], 1}
+                                //  If there exits a path to i <just> from {i[4:0], 1}
                                 else if (Path[{i[4:0], 1'b0}][(input_counter-1)*7 +: 7] == 7'b1000000 &&
                                          Path[{i[4:0], 1'b1}][(input_counter-1)*7 +: 7] != 7'b1000000)
                                 begin
@@ -108,7 +108,7 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                                     //                  Cost till now                             XOR(In(0), O(0)=(x1+x3+x4+x6+x7))   +      XOR(In(1), O(1)=(x1+x2+x3+x4+x7))
                                     CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b1}] + $unsigned(^{inBuff, i[5], i[3], i[2], i[0], 1'b1} + ^{Input, i[5], i[4], i[3], i[2], 1'b1});
                                 end
-                                //  If there exits a path to i from both from {i[5:1], 1} and {i[5:1], 0} 
+                                //  If there exits a path to i from both from {i[4:0], 1} and {i[4:0], 0} 
                                 else if (Path[{i[4:0], 1'b0}][(input_counter-1)*7 +: 7] != 7'b1000000 &&
                                          Path[{i[4:0], 1'b1}][(input_counter-1)*7 +: 7] != 7'b1000000)
                                 begin
