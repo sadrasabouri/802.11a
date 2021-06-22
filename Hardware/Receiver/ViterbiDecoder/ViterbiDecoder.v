@@ -51,7 +51,9 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
     reg [5:0] INDEX_MIN;
     //  2. TRCBCK (Trace Back Stage)
     parameter TRCBCK = 2;
-
+    reg [0:MAX_LENGTH] output_buffer;
+    //  3.  OUT_STATE (Stage in which output is shown bit by bit)
+    parameter OUT_STATE = 3;
 
     //  Viterbit - Graph
     integer i;
@@ -68,8 +70,10 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                 Path[i] <= {MAX_LENGTH{7'b1000000}};    //  Unknow state    
             end
             counter <= 10'b00_0000_0000;
-            min_dist <= 8'baa;                          //  Maximum bit error
-            INDEX_MIN <= 6'b000000;  
+            min_dist <= 8'haa;                          //  Maximum bit error
+            INDEX_MIN <= 6'b000000;
+            output_buffer <= 0;
+             Output <= 1'b0;
         end
         else
         begin
@@ -162,7 +166,7 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                         if (CostsTilNow[counter] < min_dist)
                         begin
                             min_dist <= CostsTilNow[counter];
-                            INDEX_MIN <= counter;
+                            INDEX_MIN <= counter[5:0];
                         end
                     end
                     begin
@@ -173,7 +177,26 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                 end
                 TRCBCK:
                 begin
-                    
+                    if (counter < MAX_LENGTH)
+                    begin
+                        output_buffer[MAX_LENGTH - counter - 1] <= Path[INDEX_MIN][(MAX_LENGTH - counter - 1)*7 + 1];     //  i[5]: last input
+                        INDEX_MIN <= Path[INDEX_MIN][(MAX_LENGTH - counter - 1)*7 + 1 +: 6];
+                    end
+                    begin
+                        CURRENT_SATE <= OUT_STATE;
+                        counter <= 10'b00_0000_0000;
+                    end
+                    counter <= counter + 10'b00_0000_0001;
+                end
+                OUT_STATE:
+                begin
+                    if (counter < MAX_LENGTH)
+                        Output <= output_buffer[counter];
+                    begin
+                        CURRENT_SATE <= BPMC;
+                        counter <= 10'b00_0000_0000;
+                    end
+                    counter <= counter + 10'b00_0000_0001;
                 end
                 default: 
                 begin
@@ -186,8 +209,10 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                         Path[i] <= {MAX_LENGTH{7'b1000000}};    //  Unknow state
                     end
                     counter <= 10'b00_0000_0000;
-                    min_dist <= 8'baa;                          //  Maximum bit error
+                    min_dist <= 8'haa;                          //  Maximum bit error
                     INDEX_MIN <= 6'b000000;
+                    output_buffer <= 0;
+                    Output <= 1'b0;
                 end
             endcase
             collect_buffer <= ~collect_buffer;
