@@ -94,9 +94,10 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                                     //  Hamming Distance Calculation:
                                     //                  Cost till now                             XOR(In(0), O(0)=(x1+x3+x4+x6+x7))   +      XOR(In(1), O(1)=(x1+x2+x3+x4+x7))
                                     CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b0}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}});
-                                    $display("[INNER_TEST::0]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b0}, i[5:0], {inBuff, Input}, i[5],
-                                        $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}}),
-                                        CostsTilNow[{i[4:0], 1'b0}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}}));
+                                    
+                                    // $display("[INNER_TEST::0]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b0}, i[5:0], {inBuff, Input}, i[5],
+                                    //     $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}}),
+                                    //     CostsTilNow[{i[4:0], 1'b0}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}}));
                                 end
                                 //  If there exits a path to i <just> from {i[4:0], 1}
                                 else if (Path[{i[4:0], 1'b0}][(input_counter-1)*7 +: 7] == 7'b1000000 &&
@@ -108,9 +109,10 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                                     //  Hamming Distance Calculation:
                                     //                  Cost till now                             XOR(In(0), O(0)=(x1+x3+x4+x6+x7))   +      XOR(In(1), O(1)=(x1+x2+x3+x4+x7))
                                     CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b1}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}});
-                                    $display("[INNER_TEST::1]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b1}, i[5:0], {inBuff, Input}, i[5],
-                                        $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}}),
-                                        CostsTilNow[{i[4:0], 1'b1}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}}));
+                                    
+                                    // $display("[INNER_TEST::1]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b1}, i[5:0], {inBuff, Input}, i[5],
+                                    //     $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}}),
+                                    //     CostsTilNow[{i[4:0], 1'b1}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}}));
                                 end
                                 //  If there exits a path to i from both from {i[4:0], 1} and {i[4:0], 0} 
                                 else if (Path[{i[4:0], 1'b0}][(input_counter-1)*7 +: 7] != 7'b1000000 &&
@@ -120,17 +122,19 @@ module ViterbiDecoder(Input, Reset, Clock, Output);
                                     begin   //  {i[4:0], 1'b1} is better path than {i[4:0], 1'b0}
                                         Path[i][input_counter*7 +: 7] <= {1'b0, i[4:0], 1'b1};
                                         CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b1}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}});
-                                        $display("[INNER_TEST::0,1:1]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b1}, i[5:0], {inBuff, Input}, i[5],
-                                            $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}}),
-                                            CostsTilNow[{i[4:0], 1'b1}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}}));
+                                        
+                                        // $display("[INNER_TEST::0,1:1]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b1}, i[5:0], {inBuff, Input}, i[5],
+                                        //     $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}}),
+                                        //     CostsTilNow[{i[4:0], 1'b1}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b1}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b1}}));
                                     end
                                     else
                                     begin   //  {i[4:0], 1'b0} is better path than {i[4:0], 1'b1} 
                                         Path[i][input_counter*7 +: 7] <= {1'b0, i[4:0], 1'b0};
                                         CostsTilNow[i] <= CostsTilNow[{i[4:0], 1'b0}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}});
-                                        $display("[INNER_TEST::0,1:0]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b0}, i[5:0], {inBuff, Input}, i[5],
-                                            $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}}),
-                                            CostsTilNow[{i[4:0], 1'b0}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}}));
+                                        
+                                        // $display("[INNER_TEST::0,1:0]: [%b]->[%b] | I=%d | O(%d)=%d --> new cost=%d", {i[4:0], 1'b0}, i[5:0], {inBuff, Input}, i[5],
+                                        //     $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}}),
+                                        //     CostsTilNow[{i[4:0], 1'b0}] + $unsigned({1'b0, ^{inBuff, i[5], i[3], i[2], i[0], 1'b0}} + {1'b0, ^{Input, i[5], i[4], i[3], i[2], 1'b0}}));
                                     end
                                 end
                                 else    //  State is unreachable
