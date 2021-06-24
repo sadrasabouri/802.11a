@@ -12,12 +12,12 @@ Receiver is waiting for the preamble set to start the process and it pushes it i
 As Document issued decoding the received sequence by the Viterbi algorithm is recommended. 
 
 ```
-                +--------------+ 
-                |              |
-Output Data --> | DeScrambler | <------ from Antenna
-                |              |
-                |              |
-                +--------------+
+                +--------------+     +----------------+
+                |              |     |                |
+Output Data <-- | DeScrambler  | <-- | ViterbiDecoder | <---- from Antenna
+                |              |     |                |
+                |              |     |                |
+                +--------------+     +----------------+
 ```
 
 This directory contains different files:
