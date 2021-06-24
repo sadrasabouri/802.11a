@@ -85,33 +85,33 @@ module Receiver_tb;
         end
     end
 
-    // integer j = 0;
-    // integer N_PASS = 0;
-    // reg [1:4] DESIRED_OUT = 4'b1001;
-    // initial
-    // begin
-    //     #10;
-    //     #1;
+    integer j = 0;
+    integer N_PASS = 0;
+    reg [1:4] DESIRED_OUT = 4'b1001;
+    initial
+    begin
+        #10;
+        #1;
 
-    //     #141;
-    //     $display("[DATA::START]");
-    //     for (j = 1; j <= 4; j = j + 1)
-    //     begin
-    //         if (Output == DESIRED_OUT[j])
-    //         begin
-    //             $display("[OK] (", j, "/", 4, ")");
-    //             N_PASS = N_PASS + 1;  
-    //         end
-    //         else
-    //             $display("[FAILED] (", j, "/", 4, ") Expected:%b  |  Got:%b", DESIRED_OUT[j], Output);
-    //         #1;
-    //     end
+        #437.5;
+        $display("[DATA::START]");
+        for (j = 1; j <= 4; j = j + 1)
+        begin
+            if (Output == DESIRED_OUT[j])
+            begin
+                $display("[OK] (", j, "/", 4, ")");
+                N_PASS = N_PASS + 1;  
+            end
+            else
+                $display("[FAILED] (", j, "/", 4, ") Expected:%b  |  Got:%b", DESIRED_OUT[j], Output);
+            #0.5;
+        end
 
-    //     if (N_PASS == 4)
-    //         $display("ALL TEST PASSED. :)");
-    //     else
-    //         $display(4 - N_PASS, " test(s) failed. :(");
+        if (N_PASS == 4)
+            $display("ALL TEST PASSED. :)");
+        else
+            $display(4 - N_PASS, " test(s) failed. :(");
 
-    //     $display("[DATA::END]");
-    // end
+        $display("[DATA::END]");
+    end
 endmodule

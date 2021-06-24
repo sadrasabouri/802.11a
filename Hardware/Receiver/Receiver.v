@@ -48,36 +48,14 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
     //  DeScrambler Instatiation:
     reg descrambler_reset;
     reg [7:1] descrambler_init;
+    reg [-1:6] decoded_buffer;
     DeScrambler descrambler(
-        .Input(Input_buffer[88]),           //  Which is used to descramble given data
+        .Input(decoded_buffer[-1]),           //  Which is used to descramble given data
         .Reset(descrambler_reset),
         .Init(descrambler_init),
-        .Clock(Clock),
+        .Clock(Clock2),
         .Output(Output)
     );
-
-
-    always @(posedge Clock, posedge Reset)  //  Scrambler routine
-    begin
-        if (Reset)
-        begin
-            descrambler_init <= 7'b0000000;
-        end
-        else
-        begin
-            descrambler_init[1] <= Input_buffer[91] ^ Input_buffer[95];     //  X[1] = D[2] ^ D[6]
-            descrambler_init[2] <= Input_buffer[90] ^ Input_buffer[94];     //  X[2] = D[1] ^ D[5]
-            descrambler_init[3] <= Input_buffer[89] ^ Input_buffer[93];     //  X[3] = D[0] ^ D[4]
-            descrambler_init[4] <= Input_buffer[91] ^ Input_buffer[92] ^    //  X[4] = D[2] ^ D[3] ^
-                                   Input_buffer[95];                        //         D[6]
-            descrambler_init[5] <= Input_buffer[90] ^ Input_buffer[91] ^    //  X[5] = D[1] ^ D[2] ^
-                                   Input_buffer[94];                        //         D[5]
-            descrambler_init[6] <= Input_buffer[90] ^ Input_buffer[89] ^    //  X[6] = D[1] ^ D[0] ^
-                                   Input_buffer[93];                        //         D[4]
-            descrambler_init[7] <= Input_buffer[89] ^ Input_buffer[91] ^    //  X[7] = D[0] ^ D[2] ^
-                                   Input_buffer[92] ^ Input_buffer[95];     //         D[3] ^ D[6]
-        end
-    end
 
 
     //  ViterbiDecoder Instatiation:
@@ -89,6 +67,31 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
         .Clock(Clock2),
         .Output(viterbi_out)
     );
+
+
+    always @(posedge Clock2, posedge Reset)  //  Scrambler routine
+    begin
+        if (Reset)
+        begin
+            decoded_buffer <= 8'h0;
+            descrambler_init <= 7'b0000000;
+        end
+        else
+        begin
+            decoded_buffer <= {decoded_buffer[0:6], viterbi_out};
+            descrambler_init[1] <= decoded_buffer[2] ^ decoded_buffer[6];     //  X[1] = D[2] ^ D[6]
+            descrambler_init[2] <= decoded_buffer[1] ^ decoded_buffer[5];     //  X[2] = D[1] ^ D[5]
+            descrambler_init[3] <= decoded_buffer[0] ^ decoded_buffer[4];     //  X[3] = D[0] ^ D[4]
+            descrambler_init[4] <= decoded_buffer[2] ^ decoded_buffer[3] ^    //  X[4] = D[2] ^ D[3] ^
+                                   decoded_buffer[6];                         //         D[6]
+            descrambler_init[5] <= decoded_buffer[1] ^ decoded_buffer[2] ^    //  X[5] = D[1] ^ D[2] ^
+                                   decoded_buffer[5];                         //         D[5]
+            descrambler_init[6] <= decoded_buffer[1] ^ decoded_buffer[0] ^    //  X[6] = D[1] ^ D[0] ^
+                                   decoded_buffer[4];                         //         D[4]
+            descrambler_init[7] <= decoded_buffer[0] ^ decoded_buffer[2] ^    //  X[7] = D[0] ^ D[2] ^
+                                   decoded_buffer[3] ^ decoded_buffer[6];     //         D[3] ^ D[6]
+        end
+    end
 
 
     //  Wifi-Frame - Parameters:
@@ -152,7 +155,7 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
                 IDLE_STATE:
                 begin
                     descrambler_reset = 1'b0;
-                    $display("%h ?= \n%h", Input_buffer, PREAMBLE_SYMBOLS);
+                    $display("%h ?= %h", Input_buffer, PREAMBLE_SYMBOLS);
                     if (Input_buffer == PREAMBLE_SYMBOLS)
                     begin
                         CURRENT_STATE <= WAIT4VITERBI;
@@ -212,10 +215,10 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
                 end
                 SIGNAL_PARITY_STATE:
                 begin
-                    if(Input != ^{ {RATE},   //  4  bits Data Rate
-                                   {1'b0},   //  1  bit Reserved
-                                   {LENGTH}  //  12 bits Data LENGTH
-                                 })
+                    if(viterbi_out != ^{ {RATE},   //  4  bits Data Rate
+                                       {1'b0},   //  1  bit Reserved
+                                       {LENGTH}  //  12 bits Data LENGTH
+                                       })
                         Error <= 1'b1;
 
                     //  Reached to the end of Parity sub-frame
@@ -238,11 +241,17 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
                 DATA_SERVICE_STATE:
                 begin
                     //  Reseting DeScrambler when initial values are aready
-                    if (TURNS_SERVICE_STATE == 6)
+                    if (TURNS_SERVICE_STATE == 8)
+                    begin
+                        $display("INIT=%b", descrambler_init);
                         descrambler_reset <= 1'b1;
-                    if (TURNS_SERVICE_STATE == 7)
+                    end
+                    if (TURNS_SERVICE_STATE == 9)
+                    begin
+                        $display("Scrambler Reseted.");
                         descrambler_reset <= 1'b0;
-
+                    end
+                        
                     //  Reached to the end of service sub-frame
                     if (TURNS_SERVICE_STATE >= 15)
                     begin
