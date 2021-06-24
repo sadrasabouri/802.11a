@@ -1,6 +1,7 @@
 `include "DeScrambler/DeScrambler.v"
+`include "ViterbiDecoder/ViterbiDecoder.v"
 
-module Receiver(Input, Reset, Clock, Output, Error);
+module Receiver(Input, Reset, Clock, Clock2, Output, Error);
 /*
  * Module `Receiver`
  *
@@ -13,6 +14,7 @@ module Receiver(Input, Reset, Clock, Output, Error);
  * Input    [1]: Input Wifi frame
  * Reset    [1]: Active high asynchronous reset
  * Clock    [1]: Input clock
+ * Clock2   [1]: Input clock2 (2*Main clock)
  * Output   [1]: Output data
  * Error    [1]: Error bit which uses for exception rasing
  *
@@ -23,17 +25,22 @@ module Receiver(Input, Reset, Clock, Output, Error);
     input wire Input;
     input wire Reset;
     input wire Clock;
+    input wire Clock2;
 
     output wire Output;
     output reg Error;
 
 
     parameter MAX_TURNS_PLCP_PREAMBLE = 95; //  = 12 * 8 - 1 (12 Symbols, each symbol's a byte)
-    
+    //  Current state register:
+    reg [3:0] CURRENT_STATE;
+
     reg [0:MAX_TURNS_PLCP_PREAMBLE] Input_buffer;
-    always @(posedge Clock, posedge Reset)  //  Save last 96 bit for preambles
+    wire INPUT_BUFF_CLCK;
+    assign INPUT_BUFF_CLCK = CURRENT_STATE ? Clock2 : Clock ;
+    always @(posedge INPUT_BUFF_CLCK, posedge Reset)  //  Save last 96 bit for preambles
         if (Reset)
-            Input_buffer <= 95'b0;
+            Input_buffer <= 96'b0;
         else
             Input_buffer <= {{Input_buffer[1:MAX_TURNS_PLCP_PREAMBLE]}, {Input}};
 
@@ -73,15 +80,27 @@ module Receiver(Input, Reset, Clock, Output, Error);
     end
 
 
+    //  ViterbiDecoder Instatiation:
+    reg viterbi_reset;
+    wire viterbi_out;
+    ViterbiDecoder viterbidecoder(
+        .Input(Input_buffer[94]),           //  Last input for clock problem
+        .Reset(viterbi_reset),
+        .Clock(Clock2),
+        .Output(viterbi_out)
+    );
+
+
     //  Wifi-Frame - Parameters:
-    //      Current state register:
-    reg [3:0] CURRENT_STATE;
     //      IDLE state:
     parameter [3:0] IDLE_STATE = 0;
     parameter [0:8*12-1] PREAMBLE_SYMBOLS = {8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA,
                                              8'hAA, 8'hAA, 8'hAA, 8'hAA};
 
+    //      WAIT4VITERBI:
+    parameter [3:0] WAIT4VITERBI = 1;
+    reg [10:1] WAIT4VITERBI_counter;
     //      Signal state:
     //          Rate state:
     parameter [3:0] SIGNAL_RATE_STATE = 2;
@@ -110,7 +129,7 @@ module Receiver(Input, Reset, Clock, Output, Error);
     //          PAD_BITS:
 
 
-    always @(posedge Clock, posedge Reset)
+    always @(posedge INPUT_BUFF_CLCK, posedge Reset)
     begin
         if (Reset)
         begin
@@ -124,6 +143,8 @@ module Receiver(Input, Reset, Clock, Output, Error);
             TURNS_SERVICE_STATE <= 4'b0000;
             TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
             Error <= 1'b0;
+            viterbi_reset <= 1'b0;
+            WAIT4VITERBI_counter <= 10'b0;
         end
         else
         begin
@@ -131,19 +152,40 @@ module Receiver(Input, Reset, Clock, Output, Error);
                 IDLE_STATE:
                 begin
                     descrambler_reset = 1'b0;
+                    $display("%h ?= \n%h", Input_buffer, PREAMBLE_SYMBOLS);
                     if (Input_buffer == PREAMBLE_SYMBOLS)
+                    begin
+                        CURRENT_STATE <= WAIT4VITERBI;
+                        viterbi_reset <= 1'b1;
+                        $display("New Sequence Found.");
+                    end
+                end
+                //  ------------------------------------
+                //  Wait for Viterbi Decoder to decode input sequence
+                //  ------------------------------------
+                WAIT4VITERBI:
+                begin
+                    viterbi_reset <= 1'b0;
+                    if (WAIT4VITERBI_counter == 0)
+                        $display("Viterbi Reseted.");
+                    WAIT4VITERBI_counter <= WAIT4VITERBI_counter + 10'b00_0000_0001;
+                    if (WAIT4VITERBI_counter == 645)
+                    begin
                         CURRENT_STATE <= SIGNAL_RATE_STATE;
+                        $display("Here we start to get decoded seq!");    
+                    end
                 end
                 //  ------------------------------------
                 //  PLCP_PREAMBLE::END     SIGNAL::START
                 //  ------------------------------------
                 SIGNAL_RATE_STATE:
                 begin
-                    RATE[TURNS_RATE_STATE] <= Input;
+                    RATE[TURNS_RATE_STATE] <= viterbi_out;
 
                     //  Reached to the end of Rate sub-frame
                     if (TURNS_RATE_STATE == 2'b11)
                     begin
+                        $display("RATE = %b", RATE);
                         CURRENT_STATE <= SIGNAL_RESERVERD_STATE;
                         TURNS_RATE_STATE <= 2'b00;
                     end
@@ -156,11 +198,12 @@ module Receiver(Input, Reset, Clock, Output, Error);
                 end
                 SIGNAL_LENGTH_STATE:
                 begin
-                    LENGTH[TURNS_LENGTH_STATE] <= Input;  
+                    LENGTH[TURNS_LENGTH_STATE] <= viterbi_out;  
 
                     //  Reached to the end of lenght sub-frame
                     if (TURNS_LENGTH_STATE >= 11)   //  12 - 1
                     begin
+                        $display("LEN = %b", LENGTH);
                         CURRENT_STATE <= SIGNAL_PARITY_STATE;
                         TURNS_LENGTH_STATE <= 2'b00;
                     end
