@@ -11,6 +11,7 @@ module DUT_tb;
 */
 	// Inputs
 	reg Clock;
+	reg Clock2;
 	reg Reset;
     reg Input;
     reg Start;
@@ -24,13 +25,15 @@ module DUT_tb;
         .Start(Start),
 		.Input(Input),
 		.Clock(Clock),
-		.Reset(Reset),
+		.Clock2(Clock2),
+        .Reset(Reset),
         .Antenna(Antenna),
 		.Output(Output),
         .Error(Error)
     );
 	
     localparam CLK_PERIOD = 0.5;
+    localparam CLK2_PERIOD = 0.25;
 
     always 
 	begin
@@ -38,9 +41,15 @@ module DUT_tb;
 		 #CLK_PERIOD;
 	end
 
+    always 
+	begin
+		 Clock2 = ~Clock2;
+		 #CLK2_PERIOD;
+	end
+
 	always
 	begin
-        #1;
+        #0.5;
 		$display($time, "ns |",
 			" Reset=%b", Reset,
 			" Input=%b", Input,
@@ -60,7 +69,7 @@ module DUT_tb;
 		#10
         #1;
         
-        #137;
+        #137;   //  When you should start sending...
         $display("[DATA_INPUT::START]");
         for (j = 0; j < 4; j = j + 1)
         begin
@@ -69,9 +78,31 @@ module DUT_tb;
         end
         Input = 0;
         $display("[DATA_INPUT::END]");
+    end
+    
+    initial
+    begin
+		// Initialize Inputs
+		Clock = 0;
+        Clock2 = 0;
+		Reset = 0;
+        Input = 0;
+        Start = 0;
+        #10
+
+        Reset = 1;
+        #1;
         
-        #4;
-        $display("[DATA_OUTPUT::START]");
+        Reset = 0;
+        Start = 1;
+        #1;
+        
+		$display("[START]");
+        Start = 0;
+        #1;
+
+        #437.5; //  When you should start getting...
+        $display("[DATA::START]");
         for (j = 0; j < 4; j = j + 1)
         begin
             if (Output == DATA_INPUT[j])
@@ -81,7 +112,7 @@ module DUT_tb;
             end
             else
                 $display("[FAILED] (", j, "/", 4, ") Expected:%b  |  Got:%b", DATA_INPUT[j], Output);
-            #1;
+            #0.5;
         end
 
         if (N_PASS == 4)
@@ -89,25 +120,6 @@ module DUT_tb;
         else
             $display(4 - N_PASS, " test(s) failed. :(");
 
-        $display("[DATA_OUTPUT::END]");
-    end
-
-    initial
-    begin
-		// Initialize Inputs
-		$display("[START]");
-		Clock = 0;
-		Reset = 0;
-        Input = 0;
-        Start = 0;
-        #10
-
-        Reset = 1;
-        #1;
-        Reset = 0;
-        Start = 1;
-        #1;
-        Start = 0;
-        #1;
+        $display("[DATA::END]");
     end
 endmodule
