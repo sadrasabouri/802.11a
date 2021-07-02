@@ -22,13 +22,15 @@ This part contains transmitter part of the protocol which simply breaks into 3 p
 
 2. [ConvEncoder](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/ConvEncoder)
 
+3. [Interleaver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/ConvEncoder/Interleaver)
+
 ```
-               +-----------+      +-------------+
-               |           |      |             |
-Input Data --> | Scrambler + ---> | ConvEncoder | ------> to Antenna
-               |           |      |             |
-               |           |      |             |
-               +-----------+      +-------------+
+               +-----------+      +-------------+      +-------------+
+               |           |      |             |      |             |
+Input Data --> | Scrambler + ---> | ConvEncoder + ---> | Interleaver | ------> to Antenna
+               |           |      |             |      |             |
+               |           |      |             |      |             |
+               +-----------+      +-------------+      +-------------+
 ```
 
 ### [Receiver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver)
@@ -41,12 +43,12 @@ receiver part of the protocol which simply breaks into 3 part:
 1. [DeScrambler](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/DeScrambler)
 
 ```
-                +--------------+ 
-                |              |
-Output Data --> | DeScrambler  | <------ from Antenna
-                |              |
-                |              |
-                +--------------+
+                +--------------+     +----------------+
+                |              |     |                |
+Output Data <-- | DeScrambler  | <-- | ViterbiDecoder | <---- from Antenna
+                |              |     |                |
+                |              |     |                |
+                +--------------+     +----------------+
 ```
 
 
