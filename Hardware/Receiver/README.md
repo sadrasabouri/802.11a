@@ -9,15 +9,18 @@ Receiver is waiting for the preamble set to start the process and it pushes it i
 
 2. [ViterbiDecoder](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/ViterbiDecoder)
 
+3. [DeInterleaver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/DeInterleaver)
+
+
 As Document issued decoding the received sequence by the Viterbi algorithm is recommended. 
 
 ```
-                +--------------+     +----------------+
-                |              |     |                |
-Output Data <-- | DeScrambler  | <-- | ViterbiDecoder | <---- from Antenna
-                |              |     |                |
-                |              |     |                |
-                +--------------+     +----------------+
+                +--------------+     +----------------+     +---------------+
+                |              |     |                |     |               |
+Output Data <-- | DeScrambler  | <-- | ViterbiDecoder | <-- | DeInterleaver | <---- from Antenna
+                |              |     |                |     |               |
+                |              |     |                |     |               |
+                +--------------+     +----------------+     +---------------+
 ```
 
 This directory contains different files:
