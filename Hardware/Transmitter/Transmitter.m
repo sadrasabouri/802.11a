@@ -52,9 +52,13 @@ function Output = Transmitter(Input)
         cd ..;          %   Comming back to main directory
 
         cd ConvEncoder;
-        toCoder = [PREAMBLE_SYMBOLS, ConvEncoder(toCoder(1:end))];
+        ConvEncoder_out = ConvEncoder(toCoder(1:end));
         cd ..;
-
+        
+        cd Interleaver;
+        toCoder = [PREAMBLE_SYMBOLS, Interleaver(ConvEncoder_out)];
+        cd ..;
+        
         Output = [Output, toCoder];
     end
 end
