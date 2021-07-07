@@ -1,5 +1,6 @@
 `include "Scrambler/Scrambler.v"
 `include "ConvEncoder/ConvEncoder.v"
+`include "Interleaver/Interleaver.v"
 
 module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
 /*
@@ -84,10 +85,13 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
     //          PAD_BITS:
     parameter [3:0] DATA_PADBITS_STATE = 10;
     parameter [7:0] N_DBPS = 24;
+    parameter [8:0] N_CBPS = N_DBPS * 2; 
     reg [7:0] DPBS_REMAINDER;               //  Remainder of frame length in division of N_DBPS
     reg [7:0] TURNS_PADBITS_STATE;
-
-
+    //          WAIT4INTER:
+    parameter [3:0] WAIT4INTER_STATE = 11;
+    reg [8:0] TURNS_WAIT4INTER_STATE;
+    
     //  ConvEncoder Instatiation:
     wire encoder_out;
     reg encoder_reset;
@@ -102,8 +106,27 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
     );
 
 
+    //  Interleaver Instantiation:
+    wire interleaver_out;
+    reg interleaver_reset;
+    //  Delayed reset from encoder_reset
+    always @(posedge Clock2)
+    begin
+        if (encoder_reset)
+            interleaver_reset <= 1'b1;
+        else
+            interleaver_reset <= 1'b0;
+    end
+    Interleaver interleaver(
+        .Input(encoder_out),
+        .Clock(Clock2),
+        .Reset(interleaver_reset),
+        .Output(interleaver_out)
+    );
+
+
     //  Output MUX:
-    assign Output = is_coded ? encoder_out : transmitter_out;
+    assign Output = is_coded ? interleaver_out : transmitter_out;
 
 
     //  Wifi-Frame FSM - Graph:
@@ -126,6 +149,7 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
             TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
             DPBS_REMAINDER <= 8'h00;
             TURNS_PADBITS_STATE <= 8'h00;
+            TURNS_WAIT4INTER_STATE <= 8'h00;
         end
         else if (Start) //  Start State
         begin
@@ -296,8 +320,7 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
                     if (DPBS_REMAINDER == N_DBPS)
                     begin
                         DPBS_REMAINDER <= 8'h00;
-                        CURRENT_STATE <= IDLE_STATE;
-                        is_scramble <= 1'b0;
+                        CURRENT_STATE <= WAIT4INTER_STATE;
                         transmitter_out <= 1'b0; 
                     end
                     else
@@ -310,6 +333,18 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
                 //  ------------------------------------
                 //               DATA::END
                 //  ------------------------------------
+                WAIT4INTER_STATE:
+                begin
+                    //  Reached to the end of Interleaving state
+                    if (TURNS_WAIT4INTER_STATE + 8'h01 >= N_CBPS)
+                    begin
+                        CURRENT_STATE <= IDLE_STATE;
+                        TURNS_WAIT4INTER_STATE <= 8'h00;
+                        is_scramble <= 1'b0;
+                    end
+                    else
+                        TURNS_WAIT4INTER_STATE <= TURNS_WAIT4INTER_STATE + 8'h01;
+                end
                 default:
                 begin
                     scrambler_reset <= 1'b0;
@@ -326,6 +361,7 @@ module Transmitter(Start, Input, Reset, Clock, Clock2, Output);
                     TURNS_PSDU_STATE <= 15'b000_0000_0000_0000;
                     DPBS_REMAINDER <= 8'h00;
                     TURNS_PADBITS_STATE <= 8'h00;
+                    TURNS_WAIT4INTER_STATE <= 8'h00;
                 end
             endcase
         end
