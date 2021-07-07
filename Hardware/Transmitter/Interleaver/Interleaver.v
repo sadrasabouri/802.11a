@@ -1,4 +1,4 @@
-module Scrambler(Input, Reset, Clock, Output);
+module Interleaver(Input, Reset, Clock, Output);
 /*
  * Module `Interleaver`
  *
@@ -110,19 +110,33 @@ module Scrambler(Input, Reset, Clock, Output);
                 i_row_IN <= 2'b00;
                 j_col_OUT <= 4'b0000;
                 i_row_OUT <= 2'b00;
+                counter <= 8'h01;
             end
-            
-            //  Input Memory Mapping:
-            MEM_IN[i_row_IN][j_col_IN] <= Input;
-            j_col_IN <= j_col_IN + 4'b0001;
-            if (j_col_IN == 4'b1111)
-                i_row_IN <= i_row_IN + 2'b01;
-            
-            //  Output Memory Mapping:
-            Output <= MEM_OUT[i_row_OUT][j_col_OUT];
-            i_row_OUT <= i_row_OUT + 2'b01;
-            if (i_row_OUT + 2'b01 == N_ROWS)
-                j_col_OUT <= j_col_OUT + 4'b0001;
+            else
+            begin
+                //  Input Memory Mapping:
+                MEM_IN[i_row_IN][j_col_IN] <= Input;
+                j_col_IN <= j_col_IN + 4'b0001;
+                if (j_col_IN == 4'b1111)
+                    i_row_IN <= i_row_IN + 2'b01;
+                
+                //  Output Memory Mapping:
+                i_row_OUT <= i_row_OUT + 2'b01;
+                if (i_row_OUT + 2'b01 == N_ROWS)
+                begin
+                    j_col_OUT <= j_col_OUT + 4'b0001;
+                    i_row_OUT <= 2'b00;
+                end 
+            end
         end
+    end
+
+    //  Output Update:
+    always @(posedge Clock, posedge Reset)
+    begin
+        if (Reset)
+            Output <= 1'b0;
+        else
+            Output <= MEM_OUT[i_row_OUT][j_col_OUT];
     end
 endmodule
