@@ -23,3 +23,20 @@ s = max(NBPSC/2,1)
 ```
 
 This module will put inputs into a buffer which has a length relative to NCBPS and start to output values after a dedicated pulses of clock. The output shall be interleaved values of input.
+
+This directory contains different files:
+
+## [Interleaver.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Interleaver/Interleaver.v)
+Interleaver Verilog module which will be used as a last layer in transmitter.
+
+## [Interleaver_tb.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Interleaver/Interleaver_tb.v)
+Interleaver Verilog test bench which will be used as a unit test.
+
+## [Interleaver_tb.txt](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Interleaver/Interleaver_tb.txt)
+Interleaver Verilog test bench result.
+
+## [Interleaver.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Interleaver/Interleaver.m)
+Interleaver matlab function which will be used as a software simulation for HDL module.
+
+## [Interleaver_test.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Interleaver/Interleaver_test.m)
+Interleaver matlab function test which is used as a proved test which is in IEEE standard.
