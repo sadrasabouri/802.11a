@@ -62,7 +62,6 @@ module Interleaver_tb;
         #1;
         Reset = 0;
         $display("[INPUT::START]");
-        $display("%b", DESIRED_IN[1:10]);
         for (i = 1; i <= 192; i = i + 1)
         begin
             Input = DESIRED_IN[i];
