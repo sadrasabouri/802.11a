@@ -18,9 +18,14 @@ function Output = Receiver(Input)
     N_DBPS = 24;
     
     Output = [];
-    cd ViterbiDecoder
-    Input(97 : 96 + (end - 96) / 2) = ViterbiDecoder(Input(97:end));
+    cd DeInterleaver
+    DeInterleved = DeInterleaver(Input(97:end));
     cd ..
+    
+    cd ViterbiDecoder
+    Input(97 : 96 + (end - 96) / 2) = ViterbiDecoder(DeInterleved);
+    cd ..
+    
     RATE = Input(97:100)
     LENGTH = Input(102:113)
     DATA_LENGH = 8 * bin2dec(num2str(LENGTH));
