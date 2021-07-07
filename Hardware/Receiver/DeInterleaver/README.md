@@ -57,17 +57,17 @@ Some permutation for NCBPS = 48 have been came here:
 
 This directory contains different files:
 
-## [DeInterleaver.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/DeInterleaver/DeInterleaver.v)
-DeInterleaver Verilog module which will be used as a last layer in transmitter.
+## [DeInterleaver.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/DeInterleaver/DeInterleaver.v)
+DeInterleaver Verilog module which will be used as a last layer in Receiver.
 
-## [DeInterleaver_tb.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/DeInterleaver/DeInterleaver_tb.v)
+## [DeInterleaver_tb.v](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/DeInterleaver/DeInterleaver_tb.v)
 DeInterleaver Verilog test bench which will be used as a unit test.
 
-## [DeInterleaver_tb.txt](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/DeInterleaver/DeInterleaver_tb.txt)
+## [DeInterleaver_tb.txt](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/DeInterleaver/DeInterleaver_tb.txt)
 DeInterleaver Verilog test bench result.
 
-## [DeInterleaver.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/DeInterleaver/DeInterleaver.m)
+## [DeInterleaver.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/DeInterleaver/DeInterleaver.m)
 DeInterleaver matlab function which will be used as a software simulation for HDL module.
 
-## [DeInterleaver_test.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/DeInterleaver/DeInterleaver_test.m)
+## [DeInterleaver_test.m](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Receiver/DeInterleaver/DeInterleaver_test.m)
 DeInterleaver matlab function test which is used as a proved test which is in IEEE standard.

@@ -25,7 +25,7 @@ The bit denoted as “A” shall be output from the encoder before the bit denot
 <img src="https://github.com/sadrasabouri/802.11a/blob/master/OtherFiles/ConvEncoder.PNG">
 
 
-3. [Interleaver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/ConvEncoder/Interleaver)
+3. [Interleaver](https://github.com/sadrasabouri/802.11a/tree/master/Hardware/Transmitter/Interleaver)
 
 All encoded data bits (Signal and Data subframe) shall be interleaved by a block interleaver with a block size corresponding to the number of bits in a single OFDM symbol, NCBPS.
 The interleaver is defined by a two-step permutation. The first permutation ensures that adjacent coded bits are mapped onto nonadjacent subcarriers. The second ensures that adjacent coded bits are mapped alternately onto less and more significant bits of the constellation and, thereby, long runs of low reliability (LSB) bits are avoided.
