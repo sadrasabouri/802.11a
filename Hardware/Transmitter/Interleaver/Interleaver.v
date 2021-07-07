@@ -100,17 +100,20 @@ module Interleaver(Input, Reset, Clock, Output);
             counter <= counter + 8'h01;
             if (counter == N_CBPS)
             begin
-                $display("[INNER_TEST]: (MEM_OUT <= MEM_IN)");
+                // $display("[INNER_TEST]: (MEM_OUT <= MEM_IN)");
                 for(k = 0; k < N_ROWS; k = k + 1)           //  Copy Memory
                 begin
                     MEM_OUT[k] <= MEM_IN[k];
-                    $display("%b", MEM_IN[k]);
+                    // $display("%b", MEM_IN[k]);
                 end
                 j_col_IN <= 4'b0000;
                 i_row_IN <= 2'b00;
                 j_col_OUT <= 4'b0000;
                 i_row_OUT <= 2'b00;
                 counter <= 8'h01;
+
+                //  OUT Memory last indice:
+                MEM_OUT[i_row_IN][j_col_IN] <= Input;
             end
             else
             begin
