@@ -1,5 +1,6 @@
 `include "DeScrambler/DeScrambler.v"
 `include "ViterbiDecoder/ViterbiDecoder.v"
+`include "DeInterleaver/DeInterleaver.v"
 
 module Receiver(Input, Reset, Clock, Clock2, Output, Error);
 /*
@@ -32,6 +33,7 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
 
 
     parameter MAX_TURNS_PLCP_PREAMBLE = 95; //  = 12 * 8 - 1 (12 Symbols, each symbol's a byte)
+    parameter N_CBPS = 48;
     //  Current state register:
     reg [3:0] CURRENT_STATE;
 
@@ -60,12 +62,23 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
 
     //  ViterbiDecoder Instatiation:
     reg viterbi_reset;
+    wire viterbi_in;
     wire viterbi_out;
     ViterbiDecoder viterbidecoder(
-        .Input(Input_buffer[94]),           //  Last input for clock problem
+        .Input(viterbi_in),           //  Last input for clock problem
         .Reset(viterbi_reset),
         .Clock(Clock2),
         .Output(viterbi_out)
+    );
+
+
+    //  DeInterleaver Instantiation:
+    reg deinterleaver_reset;
+    DeInterleaver deinterleaver(
+        .Input(Input_buffer[94]),
+        .Clock(Clock2),
+        .Reset(deinterleaver_reset),
+        .Output(viterbi_in)
     );
 
 
@@ -130,6 +143,12 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
     //          Tail:
     parameter [3:0] DATA_TAIL_STATE = 9;
     //          PAD_BITS:
+    //          WAIT4INTER:
+    parameter [3:0] WAIT4INTER_STATE = 10;
+    reg [7:0] WAIT4INTER_counter;
+    //          WAIT4DEINTER:
+    parameter [3:0] WAIT4DEINTER_STATE = 11;
+    reg [7:0] WAIT4DEINTER_counter;
 
 
     always @(posedge INPUT_BUFF_CLCK, posedge Reset)
@@ -148,6 +167,9 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
             Error <= 1'b0;
             viterbi_reset <= 1'b0;
             WAIT4VITERBI_counter <= 10'b0;
+            deinterleaver_reset <= 1'b0;
+            WAIT4INTER_counter <= 8'h00;
+            WAIT4DEINTER_counter <= 8'h00;
         end
         else
         begin
@@ -158,9 +180,30 @@ module Receiver(Input, Reset, Clock, Clock2, Output, Error);
                     $display("%h ?= %h", Input_buffer, PREAMBLE_SYMBOLS);
                     if (Input_buffer == PREAMBLE_SYMBOLS)
                     begin
-                        CURRENT_STATE <= WAIT4VITERBI;
-                        viterbi_reset <= 1'b1;
+                        CURRENT_STATE <= WAIT4INTER_STATE;
+                        // viterbi_reset <= 1'b1;
                         $display("New Sequence Found.");
+                    end
+                end
+                WAIT4INTER_STATE:
+                begin
+                    WAIT4INTER_counter <= WAIT4INTER_counter + 8'h01;
+                    if (WAIT4INTER_counter == N_CBPS)     //  Extra zeros generated when interleaving
+                    begin
+                        CURRENT_STATE <= WAIT4DEINTER_STATE;
+                        deinterleaver_reset <= 1'b1;
+                        $display("DeInterleaver Reseted.");
+                    end
+                end
+                WAIT4DEINTER_STATE:
+                begin
+                    deinterleaver_reset <= 1'b0;
+                    WAIT4DEINTER_counter <= WAIT4DEINTER_counter + 8'h01;
+                    if (WAIT4DEINTER_counter == N_CBPS)
+                    begin
+                        viterbi_reset <= 1'b1;
+                        CURRENT_STATE <= WAIT4VITERBI;
+                        $display("Start Decoding.");
                     end
                 end
                 //  ------------------------------------
