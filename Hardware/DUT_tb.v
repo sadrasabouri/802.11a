@@ -101,7 +101,7 @@ module DUT_tb;
         Start = 0;
         #1;
 
-        #437.5; //  When you should start getting...
+        #486.5; //  When you should start getting...
         $display("[DATA::START]");
         for (j = 0; j < 4; j = j + 1)
         begin
